@@ -1,15 +1,22 @@
 {
-  "name": "validator",
-  "version": "0.0.1",
-  "description": "",
+  "name": "chained-validation-rules",
+  "version": "0.0.2",
+  "description": "Facilitates the validation of strings by chaining series of rules",
+  "author": "ApamateSoft",
+  "license": "MIT",
+  "homepage": "https://github.com/ApamateSoft/chained-validation-rules",
+  "keywords": [
+    "validator",
+    "chained validation",
+    "validatin rules",
+    "form validation",
+    "string validation"
+  ],
   "main": "index.js",
   "scripts": {
     "test": "jest --config jestconfig.json",
     "build": "tsc"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@types/jest": "^29.5.0",
     "jest": "^29.5.0",

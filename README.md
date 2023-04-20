@@ -1,4 +1,4 @@
-# Validator
+# Chained validation rules
 
 Facilitates the validation of strings by chaining series of rules.
 

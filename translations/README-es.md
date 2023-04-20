@@ -1,6 +1,6 @@
 Versión en [Inglés](../README.md)
 
-# Validator
+# Chained validation rules
 
 Facilita la validación de strings encadenando una serie de reglas.
 
