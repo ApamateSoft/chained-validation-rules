@@ -5,6 +5,15 @@ Facilitates the validation of strings by chaining series of rules.
 ## Translations
 - [Spanish](translations/README-es.md)
 
+## Release Notes 0.0.2
+- Update documentation
+
+## Installation
+
+```shell
+npm i chained-validation-rules
+```
+
 ## Starting
 
 ### My first validator

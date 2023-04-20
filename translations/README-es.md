@@ -4,6 +4,15 @@ Versión en [Inglés](../README.md)
 
 Facilita la validación de strings encadenando una serie de reglas.
 
+## Notas de versión 0.0.2
+- Documentación actualizada
+
+## Instalación
+
+```shell
+npm i chained-validation-rules
+```
+
 ## Empezando
 
 ### Mi primer validator
