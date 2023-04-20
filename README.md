@@ -1,10 +1,13 @@
 # Validator
 
-Facilita la validación de strings encadenando una serie de reglas.
+Facilitates the validation of strings by chaining series of rules.
 
-## Empezando
+## Translations
+- [Spanish](translations/README-es.md)
 
-### Mi primer validator
+## Starting
+
+### My first validator
 
 ```typescript
 import Validator from './Validator';

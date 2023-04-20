@@ -1,10 +1,12 @@
+Versión en [Inglés](../README.md)
+
 # Validator
 
-Facilitates the validation of strings by chaining series of rules.
+Facilita la validación de strings encadenando una serie de reglas.
 
-## Starting
+## Empezando
 
-### My first validator
+### Mi primer validator
 
 ```typescript
 import Validator from './Validator';
