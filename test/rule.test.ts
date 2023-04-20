@@ -1,5 +1,4 @@
 import {describe, expect, test} from '@jest/globals';
-import ValidatorBuilder from "../src/ValidatorBuilder";
 
 describe('Rule function test', () => {
 
