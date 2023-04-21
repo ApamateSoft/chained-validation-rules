@@ -4,8 +4,8 @@ Versión en [Inglés](../README.md)
 
 Facilita la validación de strings encadenando una serie de reglas.
 
-## Notas de versión 0.0.2
-- Documentación actualizada
+## Notas de versión 0.0.4
+- Agregado el archivo index
 
 ## Instalación
 
@@ -18,7 +18,7 @@ npm i chained-validation-rules
 ### Mi primer validator
 
 ```typescript
-import Validator from './Validator';
+import {Validator} from 'chained-validation-rules';
 
 // Instantiating a new validator
 const validator = new Validator();
@@ -50,7 +50,7 @@ de que no se cumpla dicha validación.
 Puedes crear una instancia de Validator utilizando el patron builder con `.ValidatorBuilder()`.
 
 ```typescript
-import ValidatorBuilder from './ValidatorBuilder';
+import {ValidatorBuilder} from "chained-validation-rules";
 
 const validator = new ValidatorBuilder()
   .rule('Ingrese un texto diferente de null', (evaluate: string) => evaluate != 0)
@@ -63,7 +63,7 @@ const validator = new ValidatorBuilder()
 Se hace uso del método `.isValid` para saber si el String es válido.
 
 ```typescript
-import ValidatorBuilder from './ValidatorBuilder';
+import {ValidatorBuilder} from "chained-validation-rules";
 
 const validator = new ValidatorBuilder()
   .rule('El texto es diferente de xxx', (evaluate: string) => evaluate === 'xxx')
@@ -79,7 +79,7 @@ El evento `.onInvalidEvaluation` se ejecuta al fallar una regla cuando es evalua
 asociado.
 
 ```typescript
-import ValidatorBuilder from './ValidatorBuilder';
+import {ValidatorBuilder} from "chained-validation-rules";
 
 const validator = new ValidatorBuilder()
   .rule('El texto es diferente de xxx', (evaluate: string) => evaluate === 'xxx')

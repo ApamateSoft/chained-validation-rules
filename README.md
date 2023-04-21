@@ -5,8 +5,8 @@ Facilitates the validation of strings by chaining series of rules.
 ## Translations
 - [Spanish](translations/README-es.md)
 
-## Release Notes 0.0.2
-- Update documentation
+## Release Notes 0.0.4
+- add index file
 
 ## Installation
 
@@ -19,7 +19,7 @@ npm i chained-validation-rules
 ### My first validator
 
 ```typescript
-import Validator from './Validator';
+import {Validator} from 'chained-validation-rules';
 
 // Instantiating a new validator
 const validator = new Validator();
@@ -51,7 +51,7 @@ that this validation is not fulfilled.
 You can create a Validator instance using the pattern builder with `.ValidatorBuilder()`.
 
 ```typescript
-import ValidatorBuilder from './ValidatorBuilder';
+import {ValidatorBuilder} from "chained-validation-rules";
 
 const validator = new ValidatorBuilder()
   .rule('Enter a text other than null', (evaluate: string) => evaluate != 0)
@@ -64,7 +64,7 @@ const validator = new ValidatorBuilder()
 The `.isValid` method is used to find out if the String is valid.
 
 ```typescript
-import ValidatorBuilder from './ValidatorBuilder';
+import {ValidatorBuilder} from "chained-validation-rules";
 
 const validator = new ValidatorBuilder()
   .rule('The text is different from xxx', (evaluate: string) => evaluate === 'xxx')
@@ -80,7 +80,7 @@ The `.onInvalidEvaluation` event is executed when a rule fails when it is evalua
 associated.
 
 ```typescript
-import ValidatorBuilder from './ValidatorBuilder';
+import {ValidatorBuilder} from "chained-validation-rules";
 
 const validator = new ValidatorBuilder()
   .rule('The text is different from xxx', (evaluate: string) => evaluate === 'xxx')

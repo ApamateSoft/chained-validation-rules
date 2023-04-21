@@ -1,6 +1,6 @@
 {
   "name": "chained-validation-rules",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Facilitates the validation of strings by chaining series of rules",
   "author": "ApamateSoft",
   "license": "MIT",
@@ -12,7 +12,8 @@
     "form validation",
     "string validation"
   ],
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
     "test": "jest --config jestconfig.json",
     "build": "tsc"
@@ -22,8 +23,5 @@
     "jest": "^29.5.0",
     "ts-jest": "^29.1.0",
     "typescript": "^5.0.4"
-  },
-  "dependencies": {
-    "chained-validation-rules": "^0.0.1"
   }
 }
