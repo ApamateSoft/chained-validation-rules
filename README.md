@@ -5,8 +5,12 @@ Facilitates the validation of strings by chaining series of rules.
 ## Translations
 - [Spanish](translations/README-es.md)
 
-## Release Notes 0.0.4
-- add index file
+## Release Notes 0.0.5
+- The following methods have been added:
+    - `copy`
+    - `isMatch`
+    - `validOrFail`
+    - `compareOrFail`
 
 ## Installation
 
@@ -61,6 +65,8 @@ const validator = new ValidatorBuilder()
 
 ### Validating a String
 
+#### Working with events
+
 The `.isValid` method is used to find out if the String is valid.
 
 ```typescript
@@ -76,6 +82,24 @@ function submit() {
 }
 ```
 
+In case you want to compare two strings, *which is very useful to validate passwords*, you can use the method
+`.isMath`. Optionally, an error message can be defined by defining the `.notMatchMessage` property for the
+error message if it doesn't match.
+
+```typescript
+import {ValidatorBuilder} from 'chained-validation-rules';
+
+const validator = new ValidatorBuilder()
+  .rule('The text is different from xxx', (evaluate: string) => evaluate === 'xxx')
+  .setNotMatchMessage('Not match')
+  .build();
+
+function submit() {
+  validator.isMatch('abc', 'xyz'); // false
+  validator.isMatch('abc', 'abc'); // true
+}
+```
+
 The `.onInvalidEvaluation` event is executed when a rule fails when it is evaluated and returns the error message
 associated.
 
@@ -88,7 +112,85 @@ const validator = new ValidatorBuilder()
   .build();
 
 function submit() {
-  validator.isValid('yyy'); // false
-  validator.isValid('xxx'); // true
+  validator.isValid('yyy');
 }
 ```
+
+#### Work with exceptions
+
+If you prefer not to use the `.onInvalidEvaluation` event, you can use the `.validOrFail` and `.compareOrFail` methods
+replacing the `.isValid` and `.isMatch` methods respectively.
+
+The main difference is that these methods do not return any value and if they fail, they throw an exception to the type
+`InvalidEvaluationError` containing the error message from the rule along with the value of the String to be
+evaluated.
+
+```typescript
+import {ValidatorBuilder, InvalidEvaluationError} from 'chained-validation-rules';
+
+const validator = new ValidatorBuilder()
+  .rule('The text is different from xxx', (evaluate: string) => evaluate === 'xxx')
+  .build();
+
+function submit() {
+  try {
+    validator.validOrFail()('yyy');
+    validator.compareOrFail('xxx', 'yyy');
+    // TODO
+  } catch (e) {
+    console.log(e.message)
+  }
+}
+```
+
+## recommendations
+
+Commonly, there are several instances of strings to which to apply the same validation rules. for these cases
+It is recommended to define Validators per context, in order to define our Validator once and reuse it. This
+Logic is possible, since Validator includes a `.copy` method which generates copies of it.
+
+```typescript
+import {ValidatorBuilder, InvalidEvaluationError} from 'chained-validation-rules';
+
+const nick = new ValidatorBuilder()
+  .rule('Invalid nick', (evaluate: string) => evaluate === 'ApamateSoft')
+  .build();
+
+const password = new ValidatorBuilder()
+  .rule('Invalid password', (evaluate: string) => evaluate.length >= 8 )
+  .build();
+
+class Login {
+    constructor(
+      private readonly nickValidator: Validator = nick.copy(),
+      private readonly pswValidator: Validator = password.copy(),
+      private nick: string,
+      private psw: string,
+      private pswConfirmation: string
+    ) {
+      nickValidator.onInvalidEvaluation = (message: string) => console.log(message);
+      pswValidator.onInvalidEvaluation = (message: string) => console.log(message);
+    }
+
+    submit() {
+        if (
+            !this.nickValidator.isValid(email) || 
+            !this.pswValidator.isMatch(psw, pswConfirmation)
+        ) return;
+        // TODO
+    }
+
+    submitWithExceptions() {
+        try {
+          this.nickValidator.validOrFail(email);
+          this.pswValidator.compareOrFail(psw, pswConfirmation);
+            // TODO
+        } catch (e) {
+            Console.log(e.message);
+        }
+    }
+
+}
+```
+
+
