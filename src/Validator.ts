@@ -1,7 +1,7 @@
 import Rule from './Rule';
 import InvalidEvaluationError from './exceptions/InvalidEvaluationError';
 import Messages from './messages/Messages';
-import MessagesEn from './messages/MessagesEn';
+import messagesEn from './messages/MessagesEn';
 
 /**
  * <h1>Chained validation rules</h1>
@@ -9,10 +9,10 @@ import MessagesEn from './messages/MessagesEn';
  * Facilitates the validation of strings by chaining a series of rules
  *
  * @author ApamateSoft
- * @version 0.0.5
+ * @version 0.0.6
  */
 export default class Validator {
-  public static messages: Messages = new MessagesEn();
+  public static messages: Messages = messagesEn;
 
   /**
    * Event that is invoked when some rule is not fulfilled
