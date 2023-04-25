@@ -1,13 +1,15 @@
 import { describe, expect, test } from '@jest/globals';
 import { Validator, ValidatorBuilder } from '../src';
 
-const validate = (evaluate: string) => evaluate.length > 0;
+const validate = (evaluate?: string | null) => !!evaluate;
 const errorMessage = 'error message';
+
+const onError = (message: string): void => console.log(message)
 
 describe('Simple validator test', () => {
   test('The onInvalidEvaluation event must be executed if the validation is not met', () => {
     const evaluate = '';
-    const handleInvalidEvaluation = jest.fn((message: string) => {});
+    const handleInvalidEvaluation = jest.fn(onError);
     const validator = new Validator();
     validator.rule(errorMessage, validate);
     validator.onInvalidEvaluation = handleInvalidEvaluation;
@@ -17,7 +19,7 @@ describe('Simple validator test', () => {
 
   test('The onInvalidEvaluation event should not be executed if the validation is fulfilled', () => {
     const evaluate = 'a';
-    const handleInvalidEvaluation = jest.fn((message: string) => {});
+    const handleInvalidEvaluation = jest.fn(onError);
     const validator = new Validator();
     validator.rule(errorMessage, validate);
     validator.onInvalidEvaluation = handleInvalidEvaluation;
@@ -28,7 +30,7 @@ describe('Simple validator test', () => {
   test('The onInvalidEvaluation event must be executed if not match', () => {
     const evaluate = 'a';
     const compare = 'b';
-    const handleInvalidEvaluation = jest.fn((message: string) => {});
+    const handleInvalidEvaluation = jest.fn(onError);
     const validator = new Validator();
     validator.rule(errorMessage, validate);
     validator.onInvalidEvaluation = handleInvalidEvaluation;
@@ -39,7 +41,7 @@ describe('Simple validator test', () => {
   test('The onInvalidEvaluation event should not be executed if match', () => {
     const evaluate = 'a';
     const compare = 'a';
-    const handleInvalidEvaluation = jest.fn((message: string) => {});
+    const handleInvalidEvaluation = jest.fn(onError);
     const validator = new Validator();
     validator.rule(errorMessage, validate);
     validator.onInvalidEvaluation = handleInvalidEvaluation;
@@ -49,7 +51,7 @@ describe('Simple validator test', () => {
 
   test('Test validOrFail function', () => {
     const evaluate = '';
-    const handleInvalidEvaluation = jest.fn((message: string) => {});
+    const handleInvalidEvaluation = jest.fn(onError);
     const validator = new Validator();
     validator.rule(errorMessage, validate);
     validator.onInvalidEvaluation = handleInvalidEvaluation;
@@ -59,7 +61,7 @@ describe('Simple validator test', () => {
   test('Test compareOrFail function', () => {
     const evaluate = 'a';
     const compare = 'b';
-    const handleInvalidEvaluation = jest.fn((message: string) => {});
+    const handleInvalidEvaluation = jest.fn(onError);
     const validator = new Validator();
     validator.rule(errorMessage, validate);
     validator.onInvalidEvaluation = handleInvalidEvaluation;
@@ -70,7 +72,7 @@ describe('Simple validator test', () => {
 describe('ValidatorBuilder test', () => {
   test('The onInvalidEvaluation event must be executed if the validation is not met', () => {
     const evaluate = '';
-    const handleInvalidEvaluation = jest.fn((message: string) => {});
+    const handleInvalidEvaluation = jest.fn(onError);
     const validator = new ValidatorBuilder()
       .rule(errorMessage, validate)
       .addOnInvalidEvaluation(handleInvalidEvaluation)
@@ -81,7 +83,7 @@ describe('ValidatorBuilder test', () => {
 
   test('The onInvalidEvaluation event should not be executed if the validation is fulfilled', () => {
     const evaluate = 'a';
-    const handleInvalidEvaluation = jest.fn((message: string) => {});
+    const handleInvalidEvaluation = jest.fn(onError);
     const validator = new ValidatorBuilder()
       .rule(errorMessage, validate)
       .addOnInvalidEvaluation(handleInvalidEvaluation)
@@ -94,7 +96,7 @@ describe('ValidatorBuilder test', () => {
 describe('Copy validator test', () => {
   test('The onInvalidEvaluation event must be executed if the validation is not met', () => {
     const evaluate = '';
-    const handleInvalidEvaluation = jest.fn((message: string) => {});
+    const handleInvalidEvaluation = jest.fn(onError);
     const validator = new Validator();
     validator.rule(errorMessage, validate);
     const copy = validator.copy();
@@ -105,7 +107,7 @@ describe('Copy validator test', () => {
 
   test('The onInvalidEvaluation event should not be executed if the validation is fulfilled', () => {
     const evaluate = 'a';
-    const handleInvalidEvaluation = jest.fn((message: string) => {});
+    const handleInvalidEvaluation = jest.fn(onError);
     const validator = new Validator();
     validator.rule(errorMessage, validate);
     const copy = validator.copy();
@@ -114,3 +116,21 @@ describe('Copy validator test', () => {
     expect(handleInvalidEvaluation).not.toHaveBeenCalled();
   });
 });
+
+describe('textLength test', () => {
+  test('', () => {
+    const CONDITION = 3;
+    const NOT_PERMIT = [null, undefined, '', '12', '1234'];
+    const PERMIT = ['123', 'xxx'];
+
+    const validator = new ValidatorBuilder()
+      .textLength(CONDITION)
+      .addOnInvalidEvaluation( (message: string) => {
+        console.log(message)
+      } )
+      .build();
+
+    validator.isValid('')
+
+  })
+})

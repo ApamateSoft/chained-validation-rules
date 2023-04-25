@@ -3,7 +3,7 @@ export default interface Messages {
   requiredMessage: string;
   minLengthMessage: string;
   maxLengthMessage: string;
-  lengthMessage: string;
+  textLengthMessage: string;
   emailMessage: string;
-  regExpMessage: string;
+  reMessage: string;
 }

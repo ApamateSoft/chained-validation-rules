@@ -1,8 +1,8 @@
 import Validator from './Validator';
 import ValidatorBuilder from './ValidatorBuilder';
 import Messages from './messages/Messages';
-import MessagesEs from './messages/MessagesEs';
-import MessagesEn from './messages/MessagesEn';
+import messagesEs from './messages/MessagesEs';
+import messagesEn from './messages/MessagesEn';
 import InvalidEvaluationError from './exceptions/InvalidEvaluationError';
 
-export { Validator, ValidatorBuilder, Messages, MessagesEs, MessagesEn, InvalidEvaluationError };
+export { Validator, ValidatorBuilder, Messages, messagesEs, messagesEn, InvalidEvaluationError };

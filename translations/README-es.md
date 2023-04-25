@@ -62,6 +62,85 @@ const validator = new ValidatorBuilder()
   .build();
 ```
 
+### Reglas predefinidas
+
+Validator ofrece una serie de reglas predefinidas, tratando de cubrir los casos más comunes de validación.
+
+| Regla	       | Descripción                                                     |
+|--------------|-----------------------------------------------------------------|
+| `email`      | Valida que el String tenga un formato de correo electrónico     |
+| `textlength` | Valida que el String tenga una longitud exacta de caracteres    |
+| `maxLength`  | Valida que la longitud del String no sea mayor que la condición |
+| `minLength`  | Valida que la longitud del String no sea menor que la condición |
+| `re`         | Valida que el String coincida con la expresión regular          |
+| `required`   | Valida que el String sea diferente de nulo y vacío              |
+
+Las reglas predefinidas pueden simplificar la definición de un Validator.
+
+```typescript
+import {ValidatorBuilder} from "chained-validation-rules";
+
+const validator = new ValidatorBuilder()
+        .required("Requerido")
+        .minLength(6, "Se requieren más caracteres")
+        .build();
+```
+
+### Mensajes predeterminados
+
+Los mensajes en las reglas predefinidas y en las anotaciones son opcionales, por lo cual se pueden simplificar las
+implementaciones de las mismas de la siguiente manera.
+
+```typescript
+import {ValidatorBuilder} from "chained-validation-rules";
+
+const validator = new ValidatorBuilder()
+        .required()
+        .minLength(6)
+        .build();
+```
+
+Los mensajes predeterminados se encuentran en las constantes `messagesEn` para los mensajes en inglés, y en `messagesEs`
+para los mensajes en español, ambas implementan la interfaz `Messages`.
+
+| Regla        | Inglés (Por defecto)                               | Español                                          |
+|--------------|----------------------------------------------------|--------------------------------------------------|
+| `isMath`     | Not match                                          | No coinciden                                     |
+| `email`      | Email invalid                                      | Correo electrónico inválido                      |
+| `textLength` | It requires %s characters                          | Se requiere %s caracteres                        |
+| `maxLength`  | %s or less characters required                     | Se requiere %s o menos caracteres                |
+| `minLength`  | %s or more characters are required                 | Se requiere %s o más caracteres                  |
+| `re`         | The value does not match the regular expression %s | El valor no coincide con la expresión regular %s |
+| `required`   | Required                                           | Requerido                                        |
+
+##### *Nota:*
+- El %s será remplazado por la condición pasada en la regla predefinida.  
+
+#### Cambiar los mensajes por defecto
+Validator posee una variable estática llamada `.messages` el cual recibe como parámetro un objeto del tipo `Messages`.
+
+```typescript
+import {Validator} from "chained-validation-rules";
+
+Validator.messages = {
+  compareMessage: 'Mensaje personalizado',
+  requiredMessage: 'Mensaje personalizado',
+  minLengthMessage: 'Mensaje personalizado',
+  maxLengthMessage: 'Mensaje personalizado',
+  textLengthMessage: 'Mensaje personalizado',
+  emailMessage: 'Mensaje personalizado',
+  reMessage: 'Mensaje personalizado',
+}
+```
+
+#### Cambiando el idioma de los mensajes
+
+```typescript
+import {Validator, messagesEs} from "chained-validation-rules";
+
+Validator.messages = messagesEs
+```
+
 ### Validando un string
 
 #### Trabajando con eventos
@@ -147,46 +226,50 @@ Comúnmente, suele haber varias instancias de strings a cuáles aplicar las mism
 se recomienda definir los Validators por contexto, con el fin de definir nuestro Validator una vez y reutilizarlo. Esta
 lógica es posible, ya que Validator incluye el método `.copy` el cual genera copias del mismo.
 
+*validators.ts*
 ```typescript
-import {ValidatorBuilder, InvalidEvaluationError} from 'chained-validation-rules';
+import { ValidatorBuilder } from 'chained-validation-rules';
 
-const nick = new ValidatorBuilder()
-  .rule('Nombre invalido', (evaluate: string) => evaluate === 'ApamateSoft')
+const email = new ValidatorBuilder()
+  .required()
+  .email()
   .build();
 
 const password = new ValidatorBuilder()
-  .rule('Contraseña invalida', (evaluate: string) => evaluate.length >= 8 )
+  .minLength(8)
   .build();
 
-class Login {
-    constructor(
-      private readonly nickValidator: Validator = nick.copy(),
-      private readonly pswValidator: Validator = password.copy(),
-      private nick: string,
-      private psw: string,
-      private pswConfirmation: string
-    ) {
-      nickValidator.onInvalidEvaluation = (message: string) => console.log(message);
-      pswValidator.onInvalidEvaluation = (message: string) => console.log(message);
-    }
+export { email, password };
+```
+*login.ts*
+```typescript
+import { ValidatorBuilder, InvalidEvaluationError } from 'chained-validation-rules';
+import { email, password } from './validators.ts';
 
-    submit() {
-        if (
-            !this.nickValidator.isValid(email) || 
-            !this.pswValidator.isMatch(psw, pswConfirmation)
-        ) return;
-        // TODO
-    }
+const emailValidator = email.copy();
+const pswValidator = password.copy()
 
-    submitWithExceptions() {
-        try {
-          this.nickValidator.validOrFail(email);
-          this.pswValidator.compareOrFail(psw, pswConfirmation);
-            // TODO
-        } catch (e) {
-            Console.log(e.message);
-        }
-    }
+let email: string = '';
+let psw: string = '';
+let pswConfirmation: string = '';
 
+function submit() {
+  if (
+    !emailValidator.isValid(email) ||
+    !pswValidator.isMatch(psw, pswConfirmation)
+  ) return;
+  // TODO
+}
+
+function submitWithExceptions() {
+  try {
+    nickValidator.validOrFail(email);
+    pswValidator.compareOrFail(psw, pswConfirmation);
+    // TODO
+  } catch (e) {
+    if (e instanceof InvalidEvaluationError) {
+      console.log(e.message)
+    }
+  }
 }
 ```
