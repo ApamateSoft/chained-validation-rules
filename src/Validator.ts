@@ -11,7 +11,7 @@ import * as util from 'util';
  * Facilitates the validation of strings by chaining a series of rules
  *
  * @author ApamateSoft
- * @version 0.0.6
+ * @version 0.0.7
  */
 export default class Validator {
   public static messages: Messages = messagesEn;

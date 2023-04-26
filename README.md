@@ -5,7 +5,7 @@ Facilitates the validation of strings by chaining series of rules.
 ## Translations
 - [Spanish](translations/README-es.md)
 
-## Release Notes 0.0.6
+## Release Notes 0.0.7
 - Added predefined rules.
 
 ## Installation
@@ -62,7 +62,7 @@ const validator = new ValidatorBuilder()
 
 Validator offers a series of predefined rules, trying to cover the most common validation cases.
 
-| Regla	       | Descripción                                                               |
+| Rule	        | Description                                                               |
 |--------------|---------------------------------------------------------------------------|
 | `email`      | Validates that the string has an email format                             |
 | `textlength` | Validates that the string has an exact length of characters               |

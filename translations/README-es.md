@@ -4,7 +4,7 @@ Versión en [Inglés](../README.md)
 
 Facilita la validación de strings encadenando una serie de reglas.
 
-## Notas de versión 0.0.6
+## Notas de versión 0.0.7
 - Se agregaron las reglas predefinidas.
 
 ## Instalación
