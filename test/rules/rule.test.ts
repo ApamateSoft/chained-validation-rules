@@ -1,5 +1,5 @@
 import { describe, expect, test } from '@jest/globals';
-import { Validator, ValidatorBuilder } from '../src';
+import { Validator, ValidatorBuilder } from '../../src';
 
 const validate = (evaluate?: string | null) => !!evaluate;
 const errorMessage = 'error message';
@@ -116,21 +116,3 @@ describe('Copy validator test', () => {
     expect(handleInvalidEvaluation).not.toHaveBeenCalled();
   });
 });
-
-describe('textLength test', () => {
-  // test('', () => {
-  //   const CONDITION = 3;
-  //   const NOT_PERMIT = [null, undefined, '', '12', '1234'];
-  //   const PERMIT = ['123', 'xxx'];
-  //
-  //   const validator = new ValidatorBuilder()
-  //     .textLength(CONDITION)
-  //     .addOnInvalidEvaluation( (message: string) => {
-  //       console.log(message);
-  //     } )
-  //     .build();
-  //
-  //   validator.isValid('')
-  //
-  // })
-})

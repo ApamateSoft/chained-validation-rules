@@ -14,7 +14,7 @@ describe('required test', () => {
   });
 });
 
-describe('size test', () => {
+describe('textLength test', () => {
   const CONDITION = 3;
   const NOT_PERMIT = [null, undefined, '', '12', '1234'];
   const PERMIT = ['123', 'xxx'];
@@ -28,7 +28,7 @@ describe('size test', () => {
   });
 });
 
-describe('minSize test', () => {
+describe('minLength test', () => {
   const CONDITION = 3;
   const NOT_PERMIT = [null, undefined, '', '1', '12'];
   const PERMIT = ['123', '1234'];
@@ -42,7 +42,7 @@ describe('minSize test', () => {
   });
 });
 
-describe('maxSize test', () => {
+describe('maxLength test', () => {
   const CONDITION = 3;
   const NOT_PERMIT = [null, undefined, '', '1234'];
   const PERMIT = ['1', '12', '123'];
