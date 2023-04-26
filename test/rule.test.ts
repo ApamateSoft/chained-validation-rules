@@ -4,7 +4,7 @@ import { Validator, ValidatorBuilder } from '../src';
 const validate = (evaluate?: string | null) => !!evaluate;
 const errorMessage = 'error message';
 
-const onError = (message: string): void => console.log(message)
+const onError = (message: string): void => console.log(message);
 
 describe('Simple validator test', () => {
   test('The onInvalidEvaluation event must be executed if the validation is not met', () => {
@@ -118,19 +118,19 @@ describe('Copy validator test', () => {
 });
 
 describe('textLength test', () => {
-  test('', () => {
-    const CONDITION = 3;
-    const NOT_PERMIT = [null, undefined, '', '12', '1234'];
-    const PERMIT = ['123', 'xxx'];
-
-    const validator = new ValidatorBuilder()
-      .textLength(CONDITION)
-      .addOnInvalidEvaluation( (message: string) => {
-        console.log(message)
-      } )
-      .build();
-
-    validator.isValid('')
-
-  })
+  // test('', () => {
+  //   const CONDITION = 3;
+  //   const NOT_PERMIT = [null, undefined, '', '12', '1234'];
+  //   const PERMIT = ['123', 'xxx'];
+  //
+  //   const validator = new ValidatorBuilder()
+  //     .textLength(CONDITION)
+  //     .addOnInvalidEvaluation( (message: string) => {
+  //       console.log(message);
+  //     } )
+  //     .build();
+  //
+  //   validator.isValid('')
+  //
+  // })
 })
