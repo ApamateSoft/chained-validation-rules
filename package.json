@@ -1,6 +1,6 @@
 {
-  "name": "chained-validation-rules",
-  "version": "0.0.7",
+  "name": "apamate-validator",
+  "version": "0.0.8",
   "description": "Facilitates the validation of strings by chaining series of rules",
   "author": "ApamateSoft",
   "license": "MIT",
@@ -11,6 +11,11 @@
     "validatin rules",
     "form validation",
     "string validation"
+  ],
+  "files": [
+    "lib",
+    "README.md",
+    "package.json"
   ],
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
