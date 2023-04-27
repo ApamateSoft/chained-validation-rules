@@ -2,7 +2,30 @@ import Rule from './Rule';
 import InvalidEvaluationError from './exceptions/InvalidEvaluationError';
 import Messages from './messages/Messages';
 import messagesEn from './messages/MessagesEn';
-import { email, maxLength, minLength, re, required, textLength } from './utils/validators';
+import {
+  email,
+  httpLink,
+  ip,
+  ipv4,
+  ipv6,
+  link,
+  maxLength,
+  minLength,
+  number,
+  rangeLength,
+  re,
+  required,
+  textLength,
+  wwwLink,
+  name,
+  httpsLink,
+  time,
+  time12,
+  time24,
+  onlyNumbers,
+  onlyLetters,
+  onlyAlphanumeric,
+} from './utils/validators';
 import * as util from 'util';
 
 /**
@@ -147,12 +170,22 @@ export default class Validator {
   }
 
   /**
-   * Validates that the length of the String is not greater than the max
+   * Validates that the length of the string is not greater than the max
    * @param max Maximum character length
    * @param message Error message
    */
   maxLength(max: number, message: string = Validator.messages.maxLengthMessage) {
     this.rule(util.format(message, max), (eva) => maxLength(max, eva));
+  }
+
+  /**
+   * Validates that the length of the string is in the established range
+   * @param min Minimum character length
+   * @param max Maximum character length
+   * @param message Error message
+   */
+  rangeLength(min: number, max: number, message: string = Validator.messages.rangeLengthMessage) {
+    this.rule(util.format(message, min, max), (eva) => rangeLength(min, max, eva));
   }
 
   /**
@@ -170,5 +203,136 @@ export default class Validator {
    */
   email(message: string = Validator.messages.emailMessage) {
     this.rule(message, email);
+  }
+
+  /**
+   * Validates that the string is a numeric format <br/>
+   * <b>Note:</b> This includes so many integers, decimal, and negative values
+   * @param message Error message
+   */
+  number(message: string = Validator.messages.numberMessage) {
+    this.rule(message, number);
+  }
+
+  /**
+   * Validates that the string is a link format
+   * @param message Error message
+   */
+  link(message: string = Validator.messages.linkMessage) {
+    this.rule(message, link);
+  }
+
+  /**
+   * Validates that the string is a link with www format
+   * @param message Error message
+   */
+  wwwLink(message: string = Validator.messages.wwwLinkMessage) {
+    this.rule(message, wwwLink);
+  }
+
+  /**
+   * Validates that the string is a link with http format
+   * @param message Error message
+   */
+  httpLink(message: string = Validator.messages.httpLinkMessage) {
+    this.rule(message, httpLink);
+  }
+
+  /**
+   * Validates that the string is a link with https format
+   * @param message Error message
+   */
+  httpsLink(message: string = Validator.messages.httpsLinkMessage) {
+    this.rule(message, httpsLink);
+  }
+
+  /**
+   * Validates that the string is an ip format
+   * @param message Error message
+   */
+  ip(message: string = Validator.messages.ipMessage) {
+    this.rule(message, ip);
+  }
+
+  /**
+   * Validates that the string is an ipv4 format
+   * @param message Error message
+   */
+  ipv4(message: string = Validator.messages.ipv4Message) {
+    this.rule(message, ipv4);
+  }
+
+  /**
+   * Validates that the string is an ipv6 format
+   * @param message Error message
+   */
+  ipv6(message: string = Validator.messages.ipv6Message) {
+    this.rule(message, ipv6);
+  }
+
+  /**
+   * Validates that the string is a proper name <br/>
+   * <b>Note:</b>
+   * <ul>
+   *     <li>Capitalization is ignored</li>
+   *     <li>
+   *         Only valid proper names in English. to evaluate names in other languages it is recommended to use the
+   *         {@link re()} function
+   *     </li>
+   * <ul/>
+   * @param message Error message
+   */
+  name(message: string = Validator.messages.nameMessage) {
+    this.rule(message, name);
+  }
+
+  /**
+   * Validates that the string is a time format
+   * @param message Error message
+   */
+  time(message: string = Validator.messages.timeMessage) {
+    this.rule(message, time);
+  }
+
+  /**
+   * Validates that the string is a time with 12-hour format
+   * @param message Error message
+   */
+  time12(message: string = Validator.messages.time12Message) {
+    this.rule(message, time12);
+  }
+
+  /**
+   * Validate that the string is a time with 24 hours format
+   * @param message Error message
+   */
+  time24(message: string = Validator.messages.time24Message) {
+    this.rule(message, time24);
+  }
+
+  /**
+   * Validates that the string to evaluate only contains numeric characters
+   * @param message Error message
+   */
+  onlyNumbers(message: string = Validator.messages.onlyNumbersMessage) {
+    this.rule(message, onlyNumbers);
+  }
+
+  /**
+   * Validates that the string contains only letters <br />
+   * <b>Note:</b> It only recognizes letters of the English alphabet
+   * @param message Error message
+   */
+  onlyLetters(message: string = Validator.messages.onlyLettersMessage) {
+    this.rule(message, onlyLetters);
+  }
+
+  /**
+   * Validates that the string contains only alphanumeric characters <br />
+   * <b>Note:</b> It only recognizes letters of the English alphabet
+   * @param message Error message
+   */
+  onlyAlphanumeric(message: string = Validator.messages.onlyAlphanumericMessage) {
+    this.rule(message, onlyAlphanumeric);
   }
 }

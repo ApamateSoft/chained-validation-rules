@@ -4,7 +4,9 @@ import { Validator, ValidatorBuilder } from '../../src';
 const validate = (evaluate?: string | null) => !!evaluate;
 const errorMessage = 'error message';
 
-const onError = (message: string): void => console.log(message);
+const onError = (message: string): void => {
+  message.trim()
+};
 
 describe('Simple validator test', () => {
   test('The onInvalidEvaluation event must be executed if the validation is not met', () => {
