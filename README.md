@@ -5,8 +5,23 @@ Facilitates the validation of strings by chaining series of rules.
 ## Translations
 - [Spanish](translations/README-es.md)
 
-## Release Notes 0.0.7
-- Added predefined rules.
+## Release Notes 0.0.8
+- Added the following predefined rules:
+    - `rangeLength`
+    - `number`
+    - `link`
+    - `wwwLink`
+    - `httpLink`
+    - `httpsLink`
+    - `ip`
+    - `ipv4`
+    - `ipv6`
+    - `name`
+    - `time`
+    - `time12`
+    - `time24`
+    - `onlyNumbers`
+    - `onlyLetters`
 
 ## Installation
 
@@ -62,14 +77,29 @@ const validator = new ValidatorBuilder()
 
 Validator offers a series of predefined rules, trying to cover the most common validation cases.
 
-| Rule	        | Description                                                               |
-|--------------|---------------------------------------------------------------------------|
-| `email`      | Validates that the string has an email format                             |
-| `textlength` | Validates that the string has an exact length of characters               |
-| `maxLength`  | Validates that the length of the string is not greater than the condition |
-| `minLength`  | Validates that the length of the string is not less than the condition    |
-| `re`         | Validates that the string matches the regular expression                  |
-| `required`   | Validates that the string is different from null, empty or undefined      |
+| Rule	              | Description                                                               |
+|--------------------|---------------------------------------------------------------------------|
+| `email`            | Validates that the string has an email format                             |
+| `textlength`       | Validates that the string has an exact length of characters               |
+| `maxLength`        | Validates that the length of the string is not greater than the condition |
+| `minLength`        | Validates that the length of the string is not less than the condition    |
+| `rangeLength`      | Validates that the length of the String is in the established range       |
+| `re`               | Validates that the string matches the regular expression                  |
+| `required`         | Validates that the string is different from null, empty or undefined      |
+| `link`             | Validates that the String is a link format                                |
+| `wwwLink`          | Validates that the String is a link with www format                       |
+| `httpLink`         | Validates that the String is a link with http format                      |
+| `httpsLink`        | Validates that the String is a link with https format                     |
+| `ip`               | Validates that the String is an ip format                                 |
+| `ipv4`             | Validates that the String is an ipv4 format                               |
+| `ipv6`             | Validates that the String is an ipv6 format                               |
+| `name`             | Validates that the String is a proper name                                |
+| `time`             | Validates that the String is a time format                                |
+| `time12`           | Validates that the String is a time with 12-hour format                   |
+| `time24`           | Validates that the String is a time with 24-hour format                   |
+| `onlyNumbers`      | Validates that the String to evaluate only contains numeric characters    |
+| `onlyLetters`      | Validates that the String contains only letters                           |
+| `onlyAlphanumeric` | Validates that the String contains only alphanumeric characters           |
 
 Predefined rules can simplify the definition of a Validator.
 
@@ -100,13 +130,28 @@ messages, both implement the `Messages` interface.
 
 | Rule         | English *(default)*                                | Spanish                                          |
 |--------------|----------------------------------------------------|--------------------------------------------------|
-| `isMath`     | Not match                                          | No coinciden                                     |
-| `email`      | Email invalid                                      | Correo electrónico inválido                      |
-| `textLength` | It requires %s characters                          | Se requiere %s caracteres                        |
-| `maxLength`  | %s or less characters required                     | Se requiere %s o menos caracteres                |
-| `minLength`  | %s or more characters are required                 | Se requiere %s o más caracteres                  |
-| `re`         | The value does not match the regular expression %s | El valor no coincide con la expresión regular %s |
-| `required`   | Required                                           | Requerido                                        |
+| `isMath`           | Not match                                          | No coinciden                                     |
+| `email`            | Email invalid                                      | Correo electrónico inválido                      |
+| `textLength`       | It requires %s characters                          | Se requiere %s caracteres                        |
+| `maxLength`        | %s or less characters required                     | Se requiere %s o menos caracteres                |
+| `minLength`        | %s or more characters are required                 | Se requiere %s o más caracteres                  |
+| `rangeLength`      | The text must contain between %s to %s characters  | El texto debe contener entre %s a %s caracteres  |
+| `re`               | The value does not match the regular expression %s | El valor no coincide con la expresión regular %s |
+| `required`         | Required                                           | Requerido                                        |
+| `link`             | Invalid link                                       | Enlace inválido                                  |
+| `wwwLink`          | Invalid www link                                   | Enlace www inválido                              |
+| `httpLink`         | Invalid http link                                  | Enlace http inválido                             |
+| `httpsLink`        | Invalid https link                                 | Enlace https inválido                            |
+| `ip`               | Invalid IP                                         | IP inválida                                      |
+| `ipv4`             | Invalid IPv4                                       | IPv4 inválida                                    |
+| `ipv6`             | Invalid IPv6                                       | IPv6 inválida                                    |
+| `name`             | Invalid personal name                              | Nombre personal inválido                         |
+| `time`             | Time invalid                                       | Hora inválida                                    |
+| `time12`           | Invalid 12 hour format                             | Formato 12 horas inválido                        |
+| `time24`           | Invalid 12 hour format                             | Formato 12 horas inválido                        |
+| `onlyNumbers`      | Only numbers                                       | Solo números                                     |
+| `onlyLetters`      | Only letters                                       | Solo letras                                      |
+| `onlyAlphanumeric` | Just alphanumeric characters                       | Solo caracteres alfanuméricos                    |
 
 ##### *Note:*
 - The %s will be replaced by the condition passed in the predefined rule.
