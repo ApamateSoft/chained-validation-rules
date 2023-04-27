@@ -1,5 +1,5 @@
 {
-  "name": "apamate-validator",
+  "name": "chained-validation-rules",
   "version": "0.0.8",
   "description": "Facilitates the validation of strings by chaining series of rules",
   "author": "ApamateSoft",
