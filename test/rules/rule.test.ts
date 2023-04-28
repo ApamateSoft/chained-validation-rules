@@ -5,7 +5,7 @@ const validate = (evaluate?: string | null) => !!evaluate;
 const errorMessage = 'error message';
 
 const onError = (message: string): void => {
-  message.trim()
+  message.trim();
 };
 
 describe('Simple validator test', () => {
@@ -57,7 +57,7 @@ describe('Simple validator test', () => {
     const validator = new Validator();
     validator.rule(errorMessage, validate);
     validator.onInvalidEvaluation = handleInvalidEvaluation;
-    expect(() => validator.validOrFail(evaluate)).toThrowError(errorMessage);
+    expect(() => validator.validOrFail('param', evaluate)).toThrowError(errorMessage);
   });
 
   test('Test compareOrFail function', () => {

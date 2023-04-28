@@ -34,7 +34,7 @@ import * as util from 'util';
  * Facilitates the validation of strings by chaining a series of rules
  *
  * @author ApamateSoft
- * @version 0.0.8
+ * @version 0.0.9
  */
 export default class Validator {
   public static messages: Messages = messagesEn;
@@ -90,12 +90,13 @@ export default class Validator {
 
   /**
    * Validate that the string to evaluate meets all the rules
+   * @param key Identifies the string to evaluate
    * @param evaluate string to evaluate
    * @throws InvalidEvaluationError Exception thrown if the string to evaluate does not meet any rule
    */
-  validOrFail(evaluate?: string | null) {
+  validOrFail(key: string, evaluate?: string | null) {
     for (const rule of this.rules)
-      if (!rule.validate(evaluate)) throw new InvalidEvaluationError(rule.message, evaluate);
+      if (!rule.validate(evaluate)) throw new InvalidEvaluationError(rule.message, key, evaluate);
   }
 
   /**
@@ -110,13 +111,14 @@ export default class Validator {
    *        An error message can be set in case the comparison fails with the {@link notMatchMessage} method.
    *     </li>
    * <ul/>
+   * @param key Identifies the string to evaluate
    * @param evaluate string to evaluate
    * @param compare string to compare
    * @throws InvalidEvaluationError Exception thrown if the string to evaluate does not meet any rule
    */
-  compareOrFail(evaluate?: string | null, compare?: string | null) {
-    if (evaluate !== compare) throw new InvalidEvaluationError(this.notMatchMessage, evaluate);
-    this.validOrFail(evaluate);
+  compareOrFail(key: string, evaluate?: string | null, compare?: string | null) {
+    if (evaluate !== compare) throw new InvalidEvaluationError(this.notMatchMessage, key, evaluate);
+    this.validOrFail(key, evaluate);
   }
 
   /**

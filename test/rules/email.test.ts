@@ -12,7 +12,7 @@ describe('email test', () => {
     'example@mail.',
     'mail.com',
     '@mail.com',
-    'jealmesa@gmail.com;text'
+    'jealmesa@gmail.com;text',
   ];
   const PERMIT = ['jealmesa@gmail.com'];
   const MESSAGE = Validator.messages.emailMessage;
@@ -61,10 +61,10 @@ describe('email test', () => {
   });
 
   test('throwInvalidEvaluationError', () => {
-    expect(() => validator.validOrFail()).toThrowError(MESSAGE);
+    expect(() => validator.validOrFail('param')).toThrowError(MESSAGE);
   });
 
   test('throwInvalidEvaluationError_builder', () => {
-    expect(() => builder.validOrFail()).toThrowError(MESSAGE);
+    expect(() => builder.validOrFail('param')).toThrowError(MESSAGE);
   });
 });

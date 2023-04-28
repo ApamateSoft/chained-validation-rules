@@ -60,10 +60,10 @@ describe('httpsLink test', () => {
   });
 
   test('throwInvalidEvaluationError', () => {
-    expect(() => validator.validOrFail()).toThrowError(MESSAGE);
+    expect(() => validator.validOrFail('param')).toThrowError(MESSAGE);
   });
 
   test('throwInvalidEvaluationError_builder', () => {
-    expect(() => builder.validOrFail()).toThrowError(MESSAGE);
+    expect(() => builder.validOrFail('param')).toThrowError(MESSAGE);
   });
 });

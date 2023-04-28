@@ -4,23 +4,9 @@ Versión en [Inglés](../README.md)
 
 Facilita la validación de strings encadenando una serie de reglas.
 
-## Notas de versión 0.0.8
-- Se agregaron las siguientes reglas predefinidas:
-  - `rangeLength`
-  - `number`
-  - `link`
-  - `wwwLink`
-  - `httpLink`
-  - `httpsLink`
-  - `ip`
-  - `ipv4`
-  - `ipv6`
-  - `name`
-  - `time`
-  - `time12`
-  - `time24`
-  - `onlyNumbers`
-  - `onlyLetters`
+## Notas de versión 0.0.9
+- Ahora las funciones `validOrFail` y `compareOrFail` requieren un atributo `key` para ser identificados.
+- Solucionado problema al comprobar si el objeto error del catch es del tipo `InvalidEvaluationError` usando `instanceof`.
 
 ## Instalación
 
@@ -241,7 +227,8 @@ Si se prefiere no utilizar el evento `.onInvalidEvaluation`, se puede usar los m
 en sustitución de los métodos `.isValid` e `.isMatch` respectivamente.
 
 La principal diferencia es que estos métodos no retorna valor alguno y en caso de fallar, arrojan una excepción del tipo
-`InvalidEvaluationError` que contiene el mensaje de error de la regla junto con el valor del string evaluado.
+`InvalidEvaluationError` que contiene el mensaje de error de la regla junto con el valor del string evaluado y una llave 
+que funciona como identificador.
 
 ```typescript
 import { ValidatorBuilder, InvalidEvaluationError } from 'chained-validation-rules';
@@ -252,12 +239,13 @@ const validator = new ValidatorBuilder()
 
 function submit() {
   try {
-    validator.validOrFail()('yyy');
-    validator.compareOrFail('xxx', 'yyy');
-    // TODO
+    validator.validOrFail('textKey', 'yyy');
+    // ó
+    validator.compareOrFail('textKey', 'xxx', 'yyy');
+    // TODO ... 
   } catch (e) {
     if (e instanceof InvalidEvaluationError) {
-      console.log(`valor: ${e.value}, mensaje de error: ${e.message}`)
+      console.log(`key: ${e.key}, valor: ${e.value}, mensaje de error: ${e.message}`)
     }
   }
 }
@@ -283,32 +271,57 @@ export const password = new ValidatorBuilder()
   .build();
 ```
 
-*login.ts*
+*login.ts (ejemplo con eventos)*
 ```typescript
 import { ValidatorBuilder, InvalidEvaluationError } from 'chained-validation-rules';
-import { email, password } from './validators.ts';
+import { email as _email, password } from './validators.ts';
 
-const emailValidator = email.copy();
-const pswValidator = password.copy()
+let email: string, psw: string, pswConfirmation: string = '';
 
-let email, psw, pswConfirmation: string = '';
+const emailValidator: Validator = _email.copy();
+const pswValidator: Validator = password.copy()
+
+emailValidator.onInvalidEvaluation = (error: string) => {
+  // TODO tratar error para el correo electrónico
+}
+pswValidator.onInvalidEvaluation = (error: string) => {
+  // TODO tratar error para la contraseña
+}
 
 function submit() {
   if (
-    !emailValidator.isValid(email) ||
+    !emailValidator.isValid(email) || 
     !pswValidator.isMatch(psw, pswConfirmation)
   ) return;
-  // TODO
+  // TODO proceder con el submit
 }
+```
 
-function submitWithExceptions() {
+*login.ts (ejemplo con excepciones)*
+```typescript
+import { ValidatorBuilder, InvalidEvaluationError } from 'chained-validation-rules';
+import { email as _email, password } from './validators.ts';
+
+let email: string, psw: string, pswConfirmation: string = '';
+
+const emailValidator: Validator = _email.copy();
+const pswValidator: Validator = password.copy()
+
+function submit() {
   try {
-    emailValidator.validOrFail(email);
-    pswValidator.compareOrFail(psw, pswConfirmation);
-    // TODO
+    emailValidator.validOrFail('email', email);
+    pswValidator.compareOrFail('psw', psw, pswConfirmation);
+    // TODO proceder con el submit
   } catch (e) {
     if (e instanceof InvalidEvaluationError) {
-      console.log(`valor: ${e.value}, mensaje de error: ${e.message}`)
+      switch (e.key) {
+        case 'email':
+          // TODO tratar error para el correo electrónico
+          break;
+        case 'psw':
+          // TODO tratar error para la contraseña
+          break;
+      }
     }
   }
 }
