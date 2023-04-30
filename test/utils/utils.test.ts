@@ -22,6 +22,13 @@ import {
   onlyNumbers,
   onlyLetters,
   onlyAlphanumeric,
+  notContain,
+  shouldOnlyContain,
+  mustContainOne,
+  mustContainMin,
+  minValue,
+  maxValue,
+  rangeValue,
 } from '../../src/utils/validators';
 
 describe('required test', () => {
@@ -423,6 +430,106 @@ describe('onlyAlphanumeric test', () => {
   });
   test('permit', () => {
     const result = PERMIT.every(onlyAlphanumeric);
+    expect(result).toBe(true);
+  });
+});
+
+describe('notContain test', () => {
+  const CONDITION = '01234567';
+  const NOT_PERMIT = [null, undefined, '', '0', '1', '2', '3', '4', '5', '6', '7', 'text4'];
+  const PERMIT = ['89', 'text', '@nic89'];
+  test('notPermit', () => {
+    const result = NOT_PERMIT.every((eva) => !notContain(CONDITION, eva));
+    expect(result).toBe(true);
+  });
+  test('permit', () => {
+    const result = PERMIT.every((eva) => notContain(CONDITION, eva));
+    expect(result).toBe(true);
+  });
+});
+
+describe('shouldOnlyContain test', () => {
+  const CONDITION = '01234567';
+  const NOT_PERMIT = [null, undefined, '', 'text', '012345678', '/*'];
+  const PERMIT = ['01234567', '00'];
+  test('notPermit', () => {
+    const result = NOT_PERMIT.every((eva) => !shouldOnlyContain(CONDITION, eva));
+    expect(result).toBe(true);
+  });
+  test('permit', () => {
+    const result = PERMIT.every((eva) => shouldOnlyContain(CONDITION, eva));
+    expect(result).toBe(true);
+  });
+});
+
+describe('mustContainOne test', () => {
+  const CONDITION = '01234567';
+  const NOT_PERMIT = [null, undefined, '', 'text', '@nick', '@nick89'];
+  const PERMIT = ['0', '@nick1', '91'];
+  test('notPermit', () => {
+    const result = NOT_PERMIT.every((eva) => !mustContainOne(CONDITION, eva));
+    expect(result).toBe(true);
+  });
+  test('permit', () => {
+    const result = PERMIT.every((eva) => mustContainOne(CONDITION, eva));
+    expect(result).toBe(true);
+  });
+});
+
+describe('mustContainMin test', () => {
+  const MIN = 3;
+  const CONDITION = 'abcdefghijklmnopqrstuvwxyz';
+  const NOT_PERMIT = [null, undefined, '', 'ABC', '123', 'abC'];
+  const PERMIT = ['abc', 'abcd', 'aBcDe', 'abcABC123...'];
+  test('notPermit', () => {
+    const result = NOT_PERMIT.every((eva) => !mustContainMin(MIN, CONDITION, eva));
+    expect(result).toBe(true);
+  });
+  test('permit', () => {
+    const result = PERMIT.every((eva) => mustContainMin(MIN, CONDITION, eva));
+    expect(result).toBe(true);
+  });
+});
+
+describe('minValue test', () => {
+  const MIN = 2.5;
+  const NOT_PERMIT = [null, undefined, '', 'text', '2,5', '2.49', '0', '-2.5'];
+  const PERMIT = ['2.5', '2.51', '30'];
+  test('notPermit', () => {
+    const result = NOT_PERMIT.every((eva) => !minValue(MIN, eva));
+    expect(result).toBe(true);
+  });
+  test('permit', () => {
+    const result = PERMIT.every((eva) => minValue(MIN, eva));
+    expect(result).toBe(true);
+  });
+});
+
+describe('maxValue test', () => {
+  const CONDITION = 2.5;
+  const NOT_PERMIT = [null, undefined, '', 'text', '2.51', '30', '91', '1,2', '2.6'];
+  const PERMIT = ['2.5', '0.0', '-30', '2.49'];
+  test('notPermit', () => {
+    const result = NOT_PERMIT.every((eva) => !maxValue(CONDITION, eva));
+    expect(result).toBe(true);
+  });
+  test('permit', () => {
+    const result = PERMIT.every((eva) => maxValue(CONDITION, eva));
+    expect(result).toBe(true);
+  });
+});
+
+describe('rangeValue test', () => {
+  const MIN = 10;
+  const MAX = 30;
+  const NOT_PERMIT = [null, undefined, '', 'text', '9', '31'];
+  const PERMIT = ['10', '30', '20'];
+  test('notPermit', () => {
+    const result = NOT_PERMIT.every((eva) => !rangeValue(MIN, MAX, eva));
+    expect(result).toBe(true);
+  });
+  test('permit', () => {
+    const result = PERMIT.every((eva) => rangeValue(MIN, MAX, eva));
     expect(result).toBe(true);
   });
 });

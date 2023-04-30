@@ -223,7 +223,7 @@ export function time24(evaluate?: string | null): boolean {
 
 /**
  * Validates that the string to evaluate only contains numeric characters
- * @param message Error message
+ * @param evaluate string to evaluate
  */
 export function onlyNumbers(evaluate?: string | null): boolean {
   if (!required(evaluate)) return false;
@@ -250,4 +250,89 @@ export function onlyLetters(evaluate?: string | null): boolean {
 export function onlyAlphanumeric(evaluate?: string | null): boolean {
   if (!required(evaluate)) return false;
   return re(ALPHA_NUMERIC, evaluate);
+}
+
+/**
+ * Validates that the string does not contain any characters included in the alphabet
+ * @param alphabet string with invalid characters
+ * @param evaluate string to evaluate
+ * @return true if it meets the alphabet
+ */
+export function notContain(alphabet: string, evaluate?: string | null): boolean {
+  if (!required(evaluate)) return false;
+  return alphabet.split('').every((char) => !evaluate?.includes(char));
+}
+
+/**
+ * Validates that the string only contains characters included in the alphabet
+ * @param alphabet string with allowed characters
+ * @param evaluate string to evaluate
+ * @return true if it meets the alphabet
+ */
+export function shouldOnlyContain(alphabet: string, evaluate?: string | null): boolean {
+  if (!evaluate) return false;
+  return evaluate.split('').every((char) => alphabet?.includes(char));
+}
+
+/**
+ * Validates that the string contains at least one character included in the alphabet
+ * @param alphabet string with desired characters
+ * @param evaluate string to evaluate
+ * @return true if it meets the alphabet
+ */
+export function mustContainOne(alphabet: string, evaluate?: string | null): boolean {
+  if (!required(evaluate)) return false;
+  return !alphabet.split('').every((char) => !evaluate?.includes(char));
+}
+
+/**
+ * Validates that the string contains at least a minimum number of characters included in the alphabet
+ * @param min minimum value
+ * @param alphabet string with desired characters
+ * @param evaluate Valid that the entered date has not expired
+ * @return true if it meets the alphabet
+ */
+export function mustContainMin(min: number, alphabet: string, evaluate?: string | null): boolean {
+  if (!evaluate) return false;
+  let count = 0;
+  evaluate.split('').forEach((a) => {
+    alphabet.split('').forEach((b) => {
+      if (a === b) ++count;
+    });
+  });
+  return count >= min;
+}
+
+/**
+ * Validates that the value of the string is not less than the condition
+ * @param min Minimum value
+ * @param evaluate string to evaluate
+ * @return true if it meets the condition
+ */
+export function minValue(min: number, evaluate?: string | null): boolean {
+  if (!evaluate || !number(evaluate)) return false;
+  return +evaluate >= min;
+}
+
+/**
+ * Validates that the value of the string is not greater than the condition
+ * @param max Maximum value.
+ * @param evaluate string to evaluate.
+ * @return true if it meets the condition.
+ */
+export function maxValue(max: number, evaluate?: string | null): boolean {
+  if (!evaluate || !number(evaluate)) return false;
+  return +evaluate <= max;
+}
+
+/**
+ * Validates that the value of the string is in the established range
+ * @param min minimum value
+ * @param max maximum value
+ * @param evaluate string to evaluate
+ * @return true if it meets the condition
+ */
+export function rangeValue(min: number, max: number, evaluate?: string | null): boolean {
+  if (!evaluate || !number(evaluate)) return false;
+  return +evaluate >= min && +evaluate <= max;
 }
