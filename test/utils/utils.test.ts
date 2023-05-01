@@ -505,7 +505,7 @@ describe('minValue test', () => {
   });
 });
 
-describe('maxValue test', () => {
+describe('maxValue.test.ts test', () => {
   const CONDITION = 2.5;
   const NOT_PERMIT = [null, undefined, '', 'text', '2.51', '30', '91', '1,2', '2.6'];
   const PERMIT = ['2.5', '0.0', '-30', '2.49'];

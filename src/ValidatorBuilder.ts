@@ -23,6 +23,13 @@ import {
   onlyNumbers,
   onlyLetters,
   onlyAlphanumeric,
+  notContain,
+  shouldOnlyContain,
+  mustContainOne,
+  mustContainMin,
+  minValue,
+  maxValue,
+  rangeValue,
 } from './utils/validators';
 import * as util from 'util';
 
@@ -45,7 +52,7 @@ export default class ValidatorBuilder {
 
   /**
    * Sets the error message to display, in case the string comparison fails in the method {@link isMatch}
-   * @param message Error message
+   * @param notMatchMessage Error message
    * @return ValidatorBuilder
    */
   setNotMatchMessage(notMatchMessage: string): ValidatorBuilder {
@@ -281,6 +288,85 @@ export default class ValidatorBuilder {
    */
   onlyAlphanumeric(message: string = Validator.messages.onlyAlphanumericMessage): ValidatorBuilder {
     return this.rule(message, onlyAlphanumeric);
+  }
+
+  /**
+   * Validates that the string does not contain any characters included in the alphabet
+   * @param alphabet string with invalid characters
+   * @param message Error message
+   * @return ValidatorBuilder
+   */
+  notContain(alphabet: string, message: string = Validator.messages.notContainMessage): ValidatorBuilder {
+    return this.rule(util.format(message, alphabet), (eva) => notContain(alphabet, eva));
+  }
+
+  /**
+   * Validates that the string only contains characters included in the alphabet
+   * @param alphabet string with allowed characters
+   * @param message  Error message
+   * @return ValidatorBuilder
+   */
+  shouldOnlyContain(alphabet: string, message: string = Validator.messages.shouldOnlyContainMessage): ValidatorBuilder {
+    return this.rule(util.format(message, alphabet), (eva) => shouldOnlyContain(alphabet, eva));
+  }
+
+  /**
+   * Validates that the string contains at least one character included in the alphabet
+   * @param alphabet string with desired characters
+   * @param message Error message
+   * @return ValidatorBuilder
+   */
+  mustContainOne(alphabet: string, message: string = Validator.messages.mustContainOneMessage): ValidatorBuilder {
+    return this.rule(util.format(message, alphabet), (eva) => mustContainOne(alphabet, eva));
+  }
+
+  /**
+   * Validates that the string contains at least a minimum number of characters included in the alphabet
+   * @param min minimum value
+   * @param alphabet string with desired characters
+   * @param message Error message
+   * @return ValidatorBuilder
+   */
+  mustContainMin(
+    min: number,
+    alphabet: string,
+    message: string = Validator.messages.mustContainMinMessage,
+  ): ValidatorBuilder {
+    return this.rule(util.format(message, min, alphabet), (eva) => mustContainMin(min, alphabet, eva));
+  }
+
+  /**
+   * Validates that the value of the string is not less than the condition <br />
+   * <b>Note:</b> It is recommended to implement the {@link number} rule first
+   * @param min Minimum value
+   * @param message Error message
+   * @return ValidatorBuilder
+   */
+  minValue(min: number, message: string = Validator.messages.minValueMessage): ValidatorBuilder {
+    return this.rule(util.format(message, min), (eva) => minValue(min, eva));
+  }
+
+  /**
+   * Validates that the value of the string is not greater than the max <br />
+   * <b>Note:</b> It is recommended to implement the {@link number} rule first
+   * @param max Maximum value
+   * @param message Error message
+   * @return ValidatorBuilder
+   */
+  maxValue(max: number, message: string = Validator.messages.maxValueMessage): ValidatorBuilder {
+    return this.rule(util.format(message, max), (eva) => maxValue(max, eva));
+  }
+
+  /**
+   * Validates that the value of the string is in the established range <br />
+   * <b>Note:</b> It is recommended to implement the {@link number} rule first
+   * @param min Minimum value
+   * @param max Maximum value
+   * @param message Error message
+   * @return ValidatorBuilder
+   */
+  rangeValue(min: number, max: number, message: string = Validator.messages.rangeValueMessage): ValidatorBuilder {
+    return this.rule(util.format(message, min, max), (eva) => rangeValue(min, max, eva));
   }
 
   /**

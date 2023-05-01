@@ -5,9 +5,15 @@ Facilitates the validation of strings by chaining series of rules.
 ## Translations
 - [Spanish](translations/README-es.md)
 
-## Release Notes 0.0.9
-- The `validOrFail` and `compareOrFail` functions now require a `key` attribute to be identified.
-- Fixed problem when checking if the catch error object is of type `InvalidEvaluationError` using `instanceof`.
+## Release Notes 0.0.10
+- The following rules have been added:
+    - `notContain`.
+    - `shouldOnlyContain`.
+    - `mustContainOne`.
+    - `mustContainMin`.
+    - `minValue`.
+    - `maxValue`.
+    - `rangeValue`.
 
 ## Installation
 
@@ -63,29 +69,37 @@ const validator = new ValidatorBuilder()
 
 Validator offers a series of predefined rules, trying to cover the most common validation cases.
 
-| Rule	              | Description                                                               |
-|--------------------|---------------------------------------------------------------------------|
-| `email`            | Validates that the string has an email format                             |
-| `textlength`       | Validates that the string has an exact length of characters               |
-| `maxLength`        | Validates that the length of the string is not greater than the condition |
-| `minLength`        | Validates that the length of the string is not less than the condition    |
-| `rangeLength`      | Validates that the length of the String is in the established range       |
-| `re`               | Validates that the string matches the regular expression                  |
-| `required`         | Validates that the string is different from null, empty or undefined      |
-| `link`             | Validates that the String is a link format                                |
-| `wwwLink`          | Validates that the String is a link with www format                       |
-| `httpLink`         | Validates that the String is a link with http format                      |
-| `httpsLink`        | Validates that the String is a link with https format                     |
-| `ip`               | Validates that the String is an ip format                                 |
-| `ipv4`             | Validates that the String is an ipv4 format                               |
-| `ipv6`             | Validates that the String is an ipv6 format                               |
-| `name`             | Validates that the String is a proper name                                |
-| `time`             | Validates that the String is a time format                                |
-| `time12`           | Validates that the String is a time with 12-hour format                   |
-| `time24`           | Validates that the String is a time with 24-hour format                   |
-| `onlyNumbers`      | Validates that the String to evaluate only contains numeric characters    |
-| `onlyLetters`      | Validates that the String contains only letters                           |
-| `onlyAlphanumeric` | Validates that the String contains only alphanumeric characters           |
+| Rule	               | Description                                                                                          |
+|---------------------|------------------------------------------------------------------------------------------------------|
+| `email`             | Validates that the string has an email format                                                        |
+| `textLength`        | Validates that the string has an exact length of characters                                          |
+| `maxLength`         | Validates that the length of the string is not greater than the condition                            |
+| `minLength`         | Validates that the length of the string is not less than the condition                               |
+| `rangeLength`       | Validates that the length of the String is in the established range                                  |
+| `re`                | Validates that the string matches the regular expression                                             |
+| `required`          | Validates that the string is different from null, empty or undefined                                 |
+| `link`              | Validates that the String is a link format                                                           |
+| `wwwLink`           | Validates that the String is a link with www format                                                  |
+| `httpLink`          | Validates that the String is a link with http format                                                 |
+| `httpsLink`         | Validates that the String is a link with https format                                                |
+| `ip`                | Validates that the String is an ip format                                                            |
+| `ipv4`              | Validates that the String is an ipv4 format                                                          |
+| `ipv6`              | Validates that the String is an ipv6 format                                                          |
+| `name`              | Validates that the String is a proper name                                                           |
+| `time`              | Validates that the String is a time format                                                           |
+| `time12`            | Validates that the String is a time with 12-hour format                                              |
+| `time24`            | Validates that the String is a time with 24-hour format                                              |
+| `onlyNumbers`       | Validates that the String to evaluate only contains numeric characters                               |
+| `onlyLetters`       | Validates that the String contains only letters                                                      |
+| `onlyAlphanumeric`  | Validates that the String contains only alphanumeric characters                                      |
+| `notContain`        | Validates that the String does not contain any character included in the condition                   |
+| `shouldOnlyContain` | Validates that the String only contains characters included in the condition                         |
+| `mustContainOne`    | Validates that the String contains at least one character included in the condition                  |
+| `mustContainMin`    | Validates that the String contains at least a minimum number of characters included in the condition |
+| `minValue`          | Validates that the value of the String is not less than the condition                                |
+| `maxValue`          | Validates that the value of the String is not greater than the condition                             |
+| `rangeValue`        | Validates that the value of the String is in the established range                                   |
+| `number`            | Validates that the String is a numeric format                                                        |
 
 Predefined rules can simplify the definition of a Validator.
 
@@ -114,30 +128,38 @@ const validator = new ValidatorBuilder()
 The default messages are found in the `messagesEn` objects for English messages, and in `messagesEs` for Spanish 
 messages, both implement the `Messages` interface.
 
-| Rule         | English *(default)*                                | Spanish                                          |
-|--------------|----------------------------------------------------|--------------------------------------------------|
-| `isMath`           | Not match                                          | No coinciden                                     |
-| `email`            | Email invalid                                      | Correo electrónico inválido                      |
-| `textLength`       | It requires %s characters                          | Se requiere %s caracteres                        |
-| `maxLength`        | %s or less characters required                     | Se requiere %s o menos caracteres                |
-| `minLength`        | %s or more characters are required                 | Se requiere %s o más caracteres                  |
-| `rangeLength`      | The text must contain between %s to %s characters  | El texto debe contener entre %s a %s caracteres  |
-| `re`               | The value does not match the regular expression %s | El valor no coincide con la expresión regular %s |
-| `required`         | Required                                           | Requerido                                        |
-| `link`             | Invalid link                                       | Enlace inválido                                  |
-| `wwwLink`          | Invalid www link                                   | Enlace www inválido                              |
-| `httpLink`         | Invalid http link                                  | Enlace http inválido                             |
-| `httpsLink`        | Invalid https link                                 | Enlace https inválido                            |
-| `ip`               | Invalid IP                                         | IP inválida                                      |
-| `ipv4`             | Invalid IPv4                                       | IPv4 inválida                                    |
-| `ipv6`             | Invalid IPv6                                       | IPv6 inválida                                    |
-| `name`             | Invalid personal name                              | Nombre personal inválido                         |
-| `time`             | Time invalid                                       | Hora inválida                                    |
-| `time12`           | Invalid 12 hour format                             | Formato 12 horas inválido                        |
-| `time24`           | Invalid 12 hour format                             | Formato 12 horas inválido                        |
-| `onlyNumbers`      | Only numbers                                       | Solo números                                     |
-| `onlyLetters`      | Only letters                                       | Solo letras                                      |
-| `onlyAlphanumeric` | Just alphanumeric characters                       | Solo caracteres alfanuméricos                    |
+| Rule                | English *(default)*                                      | Spanish                                                   |
+|---------------------|----------------------------------------------------------|-----------------------------------------------------------|
+| `isMath`            | Not match                                                | No coinciden                                              |
+| `email`             | Email invalid                                            | Correo electrónico inválido                               |
+| `textLength`        | It requires %s characters                                | Se requiere %s caracteres                                 |
+| `maxLength`         | %s or less characters required                           | Se requiere %s o menos caracteres                         |
+| `minLength`         | %s or more characters are required                       | Se requiere %s o más caracteres                           |
+| `rangeLength`       | The text must contain between %s to %s characters        | El texto debe contener entre %s a %s caracteres           |
+| `re`                | The value does not match the regular expression %s       | El valor no coincide con la expresión regular %s          |
+| `required`          | Required                                                 | Requerido                                                 |
+| `link`              | Invalid link                                             | Enlace inválido                                           |
+| `wwwLink`           | Invalid www link                                         | Enlace www inválido                                       |
+| `httpLink`          | Invalid http link                                        | Enlace http inválido                                      |
+| `httpsLink`         | Invalid https link                                       | Enlace https inválido                                     |
+| `ip`                | Invalid IP                                               | IP inválida                                               |
+| `ipv4`              | Invalid IPv4                                             | IPv4 inválida                                             |
+| `ipv6`              | Invalid IPv6                                             | IPv6 inválida                                             |
+| `name`              | Invalid personal name                                    | Nombre personal inválido                                  |
+| `time`              | Time invalid                                             | Hora inválida                                             |
+| `time12`            | Invalid 12 hour format                                   | Formato 12 horas inválido                                 |
+| `time24`            | Invalid 12 hour format                                   | Formato 12 horas inválido                                 |
+| `onlyNumbers`       | Only numbers                                             | Solo números                                              |
+| `onlyLetters`       | Only letters                                             | Solo letras                                               |
+| `onlyAlphanumeric`  | Just alphanumeric characters                             | Solo caracteres alfanuméricos                             |
+| `notContain`        | The following characters aren't admitted %s              | No se admiten los siguientes caracteres %s                |
+| `shouldOnlyContain` | They are just admitted the following characters %s       | Solo se admiten los siguientes caracteres %s              |
+| `mustContainOne`    | At least one of the following characters is required: %s | Se requiere al menos uno de los siguientes caracteres: %s |
+| `mustContainMin`    | At least %d of the following characters are required: %s | Se requiere al menos %d de los siguientes caracteres: %s  |
+| `minValue`          | The value cannot be less than %s                         | El valor no puede ser menor a %s                          |
+| `maxValue`          | The value cannot be greater than %s                      | El valor no puede ser mayor a %s                          |
+| `rangeValue`        | The value must be between %s and %s                      | El valor debe estar entre %s y %s                         |
+| `number`            | It is not a number                                       | No es un número                                           |
 
 ##### *Note:*
 - The %s will be replaced by the condition passed in the predefined rule.
@@ -266,7 +288,12 @@ export const email = new ValidatorBuilder()
   .build();
 
 export const password = new ValidatorBuilder()
-  .minLength(8)
+  .required()
+  .minLength(12)
+  .mustContainMin(3, 'abcdefghijklmnopqrstuvwxyz')
+  .mustContainMin(3, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+  .mustContainMin(3, '0123456789')
+  .mustContainMin(3, '@~_/')
   .build();
 ```
 

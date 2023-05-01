@@ -24,6 +24,13 @@ const messageEs: Messages = {
   requiredMessage: 'Requerido',
   compareMessage: 'No coinciden',
   numberMessage: 'No es un número',
+  notContainMessage: 'No se admiten los siguientes caracteres %s',
+  shouldOnlyContainMessage: 'Solo se admiten los siguientes caracteres %s',
+  mustContainOneMessage: 'Se requiere al menos uno de los siguientes caracteres: %s',
+  mustContainMinMessage: 'Se requiere al menos %d de los siguientes caracteres: %s',
+  minValueMessage: 'El valor no puede ser menor a %s',
+  maxValueMessage: 'El valor no puede ser mayor a %s',
+  rangeValueMessage: 'El valor debe estar entre %s y %s',
 };
 
 export default messageEs;

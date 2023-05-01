@@ -22,4 +22,11 @@ export default interface Messages {
   timeMessage: string;
   time12Message: string;
   time24Message: string;
+  notContainMessage: string;
+  shouldOnlyContainMessage: string;
+  mustContainOneMessage: string;
+  mustContainMinMessage: string;
+  minValueMessage: string;
+  maxValueMessage: string;
+  rangeValueMessage: string;
 }
