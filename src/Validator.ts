@@ -32,6 +32,7 @@ import {
   minValue,
   maxValue,
   rangeValue,
+  numberPattern,
 } from './utils/validators';
 import * as util from 'util';
 
@@ -411,5 +412,20 @@ export default class Validator {
    */
   rangeValue(min: number, max: number, message: string = Validator.messages.rangeValueMessage) {
     this.rule(util.format(message, min, max), (eva) => rangeValue(min, max, eva));
+  }
+
+  /**
+   * Validates that the string matches the pattern, replacing the x's with numbers <br/>
+   * <b>Example:</b> For the pattern +xx (xxx) xxx-xx-xx, the following Strings are valid:
+   * <ul>
+   *     <li>+12 (345) 678-90-12</li>
+   *     <li>+xx (345) 678-90-12</li>
+   *     <li>+xx (xxx) xxx-xx-xx</li>
+   * <ul/>
+   * @param pattern string with the pattern
+   * @param message Error message
+   */
+  numberPattern(pattern: string, message: string = Validator.messages.numberPatternMessage) {
+    this.rule(util.format(message, pattern), (eva) => numberPattern(pattern, eva));
   }
 }

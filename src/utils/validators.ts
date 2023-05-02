@@ -1,21 +1,4 @@
-import {
-  DECIMAL,
-  EMAIL,
-  LINK,
-  WWW_LINK,
-  HTTP_LINK,
-  HTTPS_LINK,
-  IP,
-  IPV4,
-  IPV6,
-  NAME,
-  TIME,
-  TIME12,
-  TIME24,
-  NUMBER,
-  ALPHABET,
-  ALPHA_NUMERIC,
-} from './regularExpressions';
+import RE from './regularExpressions';
 
 /**
  * Validates that the string is different from null and empty
@@ -89,7 +72,7 @@ export function re(regExp: string, evaluate?: string | null): boolean {
  */
 export function email(evaluate?: string | null): boolean {
   if (!required(evaluate)) return false;
-  return re(EMAIL, evaluate);
+  return re(RE.EMAIL, evaluate);
 }
 
 /**
@@ -100,7 +83,7 @@ export function email(evaluate?: string | null): boolean {
  */
 export function number(evaluate?: string | null): boolean {
   if (!required(evaluate)) return false;
-  return re(DECIMAL, evaluate);
+  return re(RE.DECIMAL, evaluate);
 }
 
 /**
@@ -110,7 +93,7 @@ export function number(evaluate?: string | null): boolean {
  */
 export function link(evaluate?: string | null): boolean {
   if (!required(evaluate)) return false;
-  return re(LINK, evaluate);
+  return re(RE.LINK, evaluate);
 }
 
 /**
@@ -120,7 +103,7 @@ export function link(evaluate?: string | null): boolean {
  */
 export function wwwLink(evaluate?: string | null): boolean {
   if (!required(evaluate)) return false;
-  return re(WWW_LINK, evaluate);
+  return re(RE.WWW_LINK, evaluate);
 }
 
 /**
@@ -130,7 +113,7 @@ export function wwwLink(evaluate?: string | null): boolean {
  */
 export function httpLink(evaluate?: string | null): boolean {
   if (!required(evaluate)) return false;
-  return re(HTTP_LINK, evaluate);
+  return re(RE.HTTP_LINK, evaluate);
 }
 
 /**
@@ -140,7 +123,7 @@ export function httpLink(evaluate?: string | null): boolean {
  */
 export function httpsLink(evaluate?: string | null): boolean {
   if (!required(evaluate)) return false;
-  return re(HTTPS_LINK, evaluate);
+  return re(RE.HTTPS_LINK, evaluate);
 }
 
 /**
@@ -150,7 +133,7 @@ export function httpsLink(evaluate?: string | null): boolean {
  */
 export function ip(evaluate?: string | null): boolean {
   if (!required(evaluate)) return false;
-  return re(IP, evaluate);
+  return re(RE.IP, evaluate);
 }
 
 /**
@@ -160,7 +143,7 @@ export function ip(evaluate?: string | null): boolean {
  */
 export function ipv4(evaluate?: string | null): boolean {
   if (!required(evaluate)) return false;
-  return re(IPV4, evaluate);
+  return re(RE.IPV4, evaluate);
 }
 
 /**
@@ -170,7 +153,7 @@ export function ipv4(evaluate?: string | null): boolean {
  */
 export function ipv6(evaluate?: string | null): boolean {
   if (!required(evaluate)) return false;
-  return re(IPV6, evaluate);
+  return re(RE.IPV6, evaluate);
 }
 
 /**
@@ -188,7 +171,7 @@ export function ipv6(evaluate?: string | null): boolean {
  */
 export function name(evaluate?: string | null): boolean {
   if (!required(evaluate)) return false;
-  return re(NAME, evaluate);
+  return re(RE.NAME, evaluate);
 }
 
 /**
@@ -198,7 +181,7 @@ export function name(evaluate?: string | null): boolean {
  */
 export function time(evaluate?: string | null): boolean {
   if (!required(evaluate)) return false;
-  return re(TIME, evaluate);
+  return re(RE.TIME, evaluate);
 }
 
 /**
@@ -208,7 +191,7 @@ export function time(evaluate?: string | null): boolean {
  */
 export function time12(evaluate?: string | null): boolean {
   if (!required(evaluate)) return false;
-  return re(TIME12, evaluate);
+  return re(RE.TIME12, evaluate);
 }
 
 /**
@@ -218,7 +201,7 @@ export function time12(evaluate?: string | null): boolean {
  */
 export function time24(evaluate?: string | null): boolean {
   if (!required(evaluate)) return false;
-  return re(TIME24, evaluate);
+  return re(RE.TIME24, evaluate);
 }
 
 /**
@@ -227,7 +210,7 @@ export function time24(evaluate?: string | null): boolean {
  */
 export function onlyNumbers(evaluate?: string | null): boolean {
   if (!required(evaluate)) return false;
-  return re(NUMBER, evaluate);
+  return re(RE.NUMBER, evaluate);
 }
 
 /**
@@ -238,7 +221,7 @@ export function onlyNumbers(evaluate?: string | null): boolean {
  */
 export function onlyLetters(evaluate?: string | null): boolean {
   if (!required(evaluate)) return false;
-  return re(ALPHABET, evaluate);
+  return re(RE.ALPHABET, evaluate);
 }
 
 /**
@@ -249,7 +232,7 @@ export function onlyLetters(evaluate?: string | null): boolean {
  */
 export function onlyAlphanumeric(evaluate?: string | null): boolean {
   if (!required(evaluate)) return false;
-  return re(ALPHA_NUMERIC, evaluate);
+  return re(RE.ALPHA_NUMERIC, evaluate);
 }
 
 /**
@@ -335,4 +318,31 @@ export function maxValue(max: number, evaluate?: string | null): boolean {
 export function rangeValue(min: number, max: number, evaluate?: string | null): boolean {
   if (!evaluate || !number(evaluate)) return false;
   return +evaluate >= min && +evaluate <= max;
+}
+
+/**
+ * Validates that the string matches the pattern, replacing the x's with numbers <br/>
+ * <b>Example:</b> For the pattern +xx (xxx) xxx-xx-xx, the following Strings are valid:
+ * <ul>
+ *     <li>+12 (345) 678-90-12</li>
+ *     <li>+xx (345) 678-90-12</li>
+ *     <li>+xx (xxx) xxx-xx-xx</li>
+ * <ul/>
+ * @param pattern String with the pattern
+ * @param evaluate String to evaluate
+ * @return true if it meets the condition
+ */
+export function numberPattern(pattern: string, evaluate?: string | null): boolean {
+  if (!evaluate) return false;
+  if (evaluate.length !== pattern.length) return false;
+  for (let i = 0; i < pattern.split('').length; i++) {
+    const patterChar = pattern[i];
+    const evaluateChar = evaluate[i];
+    if (patterChar === 'x' || patterChar === 'X') {
+      if (!onlyNumbers(evaluateChar)) if (patterChar !== evaluateChar) return false;
+    } else {
+      if (patterChar !== evaluateChar) return false;
+    }
+  }
+  return true;
 }

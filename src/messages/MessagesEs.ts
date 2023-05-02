@@ -31,6 +31,7 @@ const messageEs: Messages = {
   minValueMessage: 'El valor no puede ser menor a %s',
   maxValueMessage: 'El valor no puede ser mayor a %s',
   rangeValueMessage: 'El valor debe estar entre %s y %s',
+  numberPatternMessage: 'No coincide con el patrón %s',
 };
 
 export default messageEs;

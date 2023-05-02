@@ -29,4 +29,5 @@ export default interface Messages {
   minValueMessage: string;
   maxValueMessage: string;
   rangeValueMessage: string;
+  numberPatternMessage: string;
 }
