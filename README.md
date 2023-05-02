@@ -5,15 +5,8 @@ Facilitates the validation of strings by chaining series of rules.
 ## Translations
 - [Spanish](translations/README-es.md)
 
-## Release Notes 0.0.10
-- The following rules have been added:
-    - `notContain`.
-    - `shouldOnlyContain`.
-    - `mustContainOne`.
-    - `mustContainMin`.
-    - `minValue`.
-    - `maxValue`.
-    - `rangeValue`.
+## Release Notes 0.0.11
+- Fix build.
 
 ## Installation
 

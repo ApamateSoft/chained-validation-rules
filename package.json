@@ -1,6 +1,6 @@
 {
   "name": "chained-validation-rules",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "Facilitates the validation of strings by chaining series of rules",
   "author": "ApamateSoft",
   "license": "MIT",

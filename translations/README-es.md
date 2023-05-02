@@ -4,15 +4,8 @@ Versión en [Inglés](../README.md)
 
 Facilita la validación de strings encadenando una serie de reglas.
 
-## Notas de versión 0.0.10
-- Se ha agregado las siguientes reglas:
-  - `notContain`.
-  - `shouldOnlyContain`.
-  - `mustContainOne`.
-  - `mustContainMin`.
-  - `minValue`.
-  - `maxValue`.
-  - `rangeValue`.
+## Notas de versión 0.0.11
+- Solución de compilación.
 
 ## Instalación
 
