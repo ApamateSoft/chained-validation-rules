@@ -1,0 +1,22 @@
+on: [push]
+
+jobs:
+  linter:
+    name: Check linters
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js 16.5.0
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16.15.0
+
+    - name: npm install, build and test
+      run: |
+        npm install
+        npm format
+        npm lint
+        npm eslint
+        npm run build
+        npm test
