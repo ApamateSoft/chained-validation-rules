@@ -1,12 +1,11 @@
 import { describe, expect, test } from '@jest/globals';
-import * as util from 'util';
 import { Validator, ValidatorBuilder } from '../../src';
 
 describe('minLength test', () => {
   const CONDITION = 3;
   const NOT_PERMIT = [null, undefined, '', '1', '12'];
   const PERMIT = ['123', '1234'];
-  const MESSAGE = util.format(Validator.messages.minLengthMessage, CONDITION);
+  const MESSAGE = Validator.messages.minLengthMessage.replace('%min', String(CONDITION));
 
   let validator: Validator, builder: Validator;
 

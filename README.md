@@ -5,8 +5,9 @@ Facilitates the validation of strings by chaining series of rules.
 ## Translations
 - [Spanish](translations/README-es.md)
 
-## Release Notes 0.0.11
-- Fix build.
+## Release Notes 0.0.12
+- Added predefined rule `number Pattern`.
+- The structure of the default messages has been changed.
 
 ## Installation
 
@@ -93,6 +94,7 @@ Validator offers a series of predefined rules, trying to cover the most common v
 | `maxValue`          | Validates that the value of the String is not greater than the condition                             |
 | `rangeValue`        | Validates that the value of the String is in the established range                                   |
 | `number`            | Validates that the String is a numeric format                                                        |
+| `numberPattern`     | Validates that the String matches the pattern, replacing the x's with numbers                        |
 
 Predefined rules can simplify the definition of a Validator.
 
@@ -110,7 +112,7 @@ const validator = new ValidatorBuilder()
 The messages in the predefined rules are optional, so you can simplify the implementations as follows.
 
 ```typescript
-import { ValidatorBuilder } from "chained-validation-rules";
+import { ValidatorBuilder } from 'chained-validation-rules';
 
 const validator = new ValidatorBuilder()
         .required()
@@ -121,41 +123,43 @@ const validator = new ValidatorBuilder()
 The default messages are found in the `messagesEn` objects for English messages, and in `messagesEs` for Spanish 
 messages, both implement the `Messages` interface.
 
-| Rule                | English *(default)*                                      | Spanish                                                   |
-|---------------------|----------------------------------------------------------|-----------------------------------------------------------|
-| `isMath`            | Not match                                                | No coinciden                                              |
-| `email`             | Email invalid                                            | Correo electrónico inválido                               |
-| `textLength`        | It requires %s characters                                | Se requiere %s caracteres                                 |
-| `maxLength`         | %s or less characters required                           | Se requiere %s o menos caracteres                         |
-| `minLength`         | %s or more characters are required                       | Se requiere %s o más caracteres                           |
-| `rangeLength`       | The text must contain between %s to %s characters        | El texto debe contener entre %s a %s caracteres           |
-| `re`                | The value does not match the regular expression %s       | El valor no coincide con la expresión regular %s          |
-| `required`          | Required                                                 | Requerido                                                 |
-| `link`              | Invalid link                                             | Enlace inválido                                           |
-| `wwwLink`           | Invalid www link                                         | Enlace www inválido                                       |
-| `httpLink`          | Invalid http link                                        | Enlace http inválido                                      |
-| `httpsLink`         | Invalid https link                                       | Enlace https inválido                                     |
-| `ip`                | Invalid IP                                               | IP inválida                                               |
-| `ipv4`              | Invalid IPv4                                             | IPv4 inválida                                             |
-| `ipv6`              | Invalid IPv6                                             | IPv6 inválida                                             |
-| `name`              | Invalid personal name                                    | Nombre personal inválido                                  |
-| `time`              | Time invalid                                             | Hora inválida                                             |
-| `time12`            | Invalid 12 hour format                                   | Formato 12 horas inválido                                 |
-| `time24`            | Invalid 12 hour format                                   | Formato 12 horas inválido                                 |
-| `onlyNumbers`       | Only numbers                                             | Solo números                                              |
-| `onlyLetters`       | Only letters                                             | Solo letras                                               |
-| `onlyAlphanumeric`  | Just alphanumeric characters                             | Solo caracteres alfanuméricos                             |
-| `notContain`        | The following characters aren't admitted %s              | No se admiten los siguientes caracteres %s                |
-| `shouldOnlyContain` | They are just admitted the following characters %s       | Solo se admiten los siguientes caracteres %s              |
-| `mustContainOne`    | At least one of the following characters is required: %s | Se requiere al menos uno de los siguientes caracteres: %s |
-| `mustContainMin`    | At least %d of the following characters are required: %s | Se requiere al menos %d de los siguientes caracteres: %s  |
-| `minValue`          | The value cannot be less than %s                         | El valor no puede ser menor a %s                          |
-| `maxValue`          | The value cannot be greater than %s                      | El valor no puede ser mayor a %s                          |
-| `rangeValue`        | The value must be between %s and %s                      | El valor debe estar entre %s y %s                         |
-| `number`            | It is not a number                                       | No es un número                                           |
+| Rule                | English *(default)*                                               | Spanish                                                           |
+|---------------------|-------------------------------------------------------------------|-------------------------------------------------------------------|
+| `isMath`            | Not match                                                         | No coinciden                                                      |
+| `email`             | Email invalid                                                     | Correo electrónico inválido                                       |
+| `textLength`        | It requires %length characters                                    | Se requiere %length caracteres                                    |
+| `maxLength`         | %max or less characters required                                  | Se requiere %max o menos caracteres                               |
+| `minLength`         | %min or more characters are required                              | Se requiere %min o más caracteres                                 |
+| `rangeLength`       | The text must contain between %min to %max characters             | El texto debe contener entre %min a %max caracteres               |
+| `re`                | The value does not match the regular expression %regExp           | El valor no coincide con la expresión regular %regExp             |
+| `required`          | Required                                                          | Requerido                                                         |
+| `link`              | Invalid link                                                      | Enlace inválido                                                   |
+| `wwwLink`           | Invalid www link                                                  | Enlace www inválido                                               |
+| `httpLink`          | Invalid http link                                                 | Enlace http inválido                                              |
+| `httpsLink`         | Invalid https link                                                | Enlace https inválido                                             |
+| `ip`                | Invalid IP                                                        | IP inválida                                                       |
+| `ipv4`              | Invalid IPv4                                                      | IPv4 inválida                                                     |
+| `ipv6`              | Invalid IPv6                                                      | IPv6 inválida                                                     |
+| `name`              | Invalid personal name                                             | Nombre personal inválido                                          |
+| `time`              | Time invalid                                                      | Hora inválida                                                     |
+| `time12`            | Invalid 12 hour format                                            | Formato 12 horas inválido                                         |
+| `time24`            | Invalid 12 hour format                                            | Formato 12 horas inválido                                         |
+| `onlyNumbers`       | Only numbers                                                      | Solo números                                                      |
+| `onlyLetters`       | Only letters                                                      | Solo letras                                                       |
+| `onlyAlphanumeric`  | Just alphanumeric characters                                      | Solo caracteres alfanuméricos                                     |
+| `notContain`        | The following characters aren't admitted %alphabet                | No se admiten los siguientes caracteres %alphabet                 |
+| `shouldOnlyContain` | They are just admitted the following characters %alphabet         | Solo se admiten los siguientes caracteres %alphabet               |
+| `mustContainOne`    | At least one of the following characters is required: %alphabet   | Se requiere al menos uno de los siguientes caracteres: %alphabet  |
+| `mustContainMin`    | At least %min of the following characters are required: %alphabet | Se requiere al menos %min de los siguientes caracteres: %alphabet |
+| `minValue`          | The value cannot be less than %min                                | El valor no puede ser menor a %min                                |
+| `maxValue`          | The value cannot be greater than %max                             | El valor no puede ser mayor a %max                                |
+| `rangeValue`        | The value must be between %min and %max                           | El valor debe estar entre %min y %max                             |
+| `number`            | It is not a number                                                | No es un número                                                   |
+| `numberPattern`     | Does not match pattern %pattern                                   | No coincide con el patrón %pattern                                |
 
 ##### *Note:*
-- The %s will be replaced by the condition passed in the predefined rule.
+- The % followed by the variable name will be replaced by the condition passed in the predefined rule.
+- The message passed directly into the rule has priority over the default messages.
 
 #### Change default messages
 Validator has a static variable called `.messages` which receives an object of type `Messages` as a parameter.
@@ -164,13 +168,37 @@ Validator has a static variable called `.messages` which receives an object of t
 import { Validator } from 'chained-validation-rules';
 
 Validator.messages = {
+  onlyAlphanumericMessage: 'Custom message',
+  onlyLettersMessage: 'Custom message',
+  onlyNumbersMessage: 'Custom message',
   compareMessage: 'Custom message',
   requiredMessage: 'Custom message',
   minLengthMessage: 'Custom message',
   maxLengthMessage: 'Custom message',
+  rangeLengthMessage: 'Custom message',
   textLengthMessage: 'Custom message',
   emailMessage: 'Custom message',
-  reMessage: 'Custom message'
+  reMessage: 'Custom message',
+  numberMessage: 'Custom message',
+  linkMessage: 'Custom message',
+  wwwLinkMessage: 'Custom message',
+  httpLinkMessage: 'Custom message',
+  httpsLinkMessage: 'Custom message',
+  ipMessage: 'Custom message',
+  ipv4Message: 'Custom message',
+  ipv6Message: 'Custom message',
+  nameMessage: 'Custom message',
+  timeMessage: 'Custom message',
+  time12Message: 'Custom message',
+  time24Message: 'Custom message',
+  notContainMessage: 'Custom message',
+  shouldOnlyContainMessage: 'Custom message',
+  mustContainOneMessage: 'Custom message',
+  mustContainMinMessage: 'Custom message',
+  minValueMessage: 'Custom message',
+  maxValueMessage: 'Custom message',
+  rangeValueMessage: 'Custom message',
+  numberPatternMessage: 'Custom message',
 }
 ```
 
@@ -253,7 +281,7 @@ const validator = new ValidatorBuilder()
 
 function submit() {
   try {
-    validator.validOrFail()('textKey', 'yyy');
+    validator.validOrFail('textKey', 'yyy');
     // or
     validator.compareOrFail('textKey', 'xxx', 'yyy');
     // TODO ...

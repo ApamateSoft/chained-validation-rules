@@ -1,23 +1,28 @@
 import { describe, expect, test } from '@jest/globals';
 import { Validator, ValidatorBuilder } from '../../src';
 
-describe('link test', () => {
-  const NOT_PERMIT = [null, undefined, '', 'google.com', 'text', 'a1', '1a', '12345,6789', '123.456.789'];
-  const PERMIT = [
-    'www.google.com',
-    'http://google.com',
-    'https://google.com',
-    'http://google.com/api/auth?name=Name&lastName=LastName',
+describe('numberPattern test', () => {
+  const CONDITION = '+xx (xxx) xxx-xx-xx';
+  const NOT_PERMIT = [
+    null,
+    undefined,
+    '',
+    'example',
+    '128',
+    '+58 (412) 756-41-79 ',
+    ' +58 (412) 756-41-79',
+    '+a8 (412) 756-41-79',
   ];
-  const MESSAGE = Validator.messages.linkMessage;
+  const PERMIT = ['+58 (412) 756-41-79', '+xx (xxx) xxx-xx-xx'];
+  const MESSAGE = Validator.messages.numberPatternMessage.replace('%pattern', CONDITION);
 
   let validator: Validator, builder: Validator;
 
   beforeEach(() => {
     validator = new Validator();
-    validator.link();
+    validator.numberPattern(CONDITION);
 
-    builder = new ValidatorBuilder().link().build();
+    builder = new ValidatorBuilder().numberPattern(CONDITION).build();
   });
 
   test('notPermit', () => {
@@ -55,10 +60,10 @@ describe('link test', () => {
   });
 
   test('throwInvalidEvaluationError', () => {
-    expect(() => validator.validOrFail('param')).toThrowError(MESSAGE);
+    expect(() => validator.validOrFail('')).toThrowError(MESSAGE);
   });
 
   test('throwInvalidEvaluationError_builder', () => {
-    expect(() => builder.validOrFail('param')).toThrowError(MESSAGE);
+    expect(() => builder.validOrFail('')).toThrowError(MESSAGE);
   });
 });

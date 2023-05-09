@@ -16,7 +16,6 @@ jobs:
       run: |
         npm install
         npm run format
-        npm rum lint
+        npm run lint
         npm run eslint
-        npm run build
         npm run test

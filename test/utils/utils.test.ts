@@ -29,6 +29,7 @@ import {
   minValue,
   maxValue,
   rangeValue,
+  numberPattern,
 } from '../../src/utils/validators';
 
 describe('required test', () => {
@@ -530,6 +531,29 @@ describe('rangeValue test', () => {
   });
   test('permit', () => {
     const result = PERMIT.every((eva) => rangeValue(MIN, MAX, eva));
+    expect(result).toBe(true);
+  });
+});
+
+describe('numberPattern test', () => {
+  const PATTERN = '+xx (xxx) xxx-xx-xx';
+  const NOT_PERMIT = [
+    null,
+    undefined,
+    '',
+    'example',
+    '128',
+    '+58 (412) 756-41-79 ',
+    ' +58 (412) 756-41-79',
+    '+a8 (412) 756-41-79',
+  ];
+  const PERMIT = ['+58 (412) 756-41-79', '+xx (xxx) xxx-xx-xx'];
+  test('notPermit', () => {
+    const result = NOT_PERMIT.every((eva) => !numberPattern(PATTERN, eva));
+    expect(result).toBe(true);
+  });
+  test('permit', () => {
+    const result = PERMIT.every((eva) => numberPattern(PATTERN, eva));
     expect(result).toBe(true);
   });
 });

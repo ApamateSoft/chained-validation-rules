@@ -1,6 +1,6 @@
 import Messages from './Messages';
 
-const messageEn: Messages = {
+const messageEn: Messages = Object.freeze({
   onlyAlphanumericMessage: 'Just alphanumeric characters',
   onlyLettersMessage: 'Only letters',
   onlyNumbersMessage: 'Only numbers',
@@ -16,21 +16,22 @@ const messageEn: Messages = {
   timeMessage: 'Invalid time',
   wwwLinkMessage: 'Invalid www link',
   emailMessage: 'Email invalid',
-  textLengthMessage: 'It requires %s characters',
-  maxLengthMessage: '%s or less characters required',
-  minLengthMessage: '%s or more characters are required',
-  rangeLengthMessage: 'The text must contain between %s to %s characters',
-  reMessage: 'The value does not match the regular expression %s',
+  textLengthMessage: 'It requires %length characters',
+  maxLengthMessage: '%max or less characters required',
+  minLengthMessage: '%min or more characters are required',
+  rangeLengthMessage: 'The text must contain between %min to %max characters',
+  reMessage: 'The value does not match the regular expression %regExp',
   requiredMessage: 'Required',
   compareMessage: 'Not match',
   numberMessage: 'It is not a number',
-  notContainMessage: "The following characters aren't admitted %s",
-  shouldOnlyContainMessage: 'They are just admitted the following characters %s',
-  mustContainOneMessage: 'At least one of the following characters is required: %s',
-  mustContainMinMessage: 'At least %d of the following characters are required: %s',
-  minValueMessage: 'The value cannot be less than %s',
-  maxValueMessage: 'The value cannot be greater than %s',
-  rangeValueMessage: 'The value must be between %s and %s',
-};
+  notContainMessage: "The following characters aren't admitted %alphabet",
+  shouldOnlyContainMessage: 'They are just admitted the following characters %alphabet',
+  mustContainOneMessage: 'At least one of the following characters is required: %alphabet',
+  mustContainMinMessage: 'At least %min of the following characters are required: %alphabet',
+  minValueMessage: 'The value cannot be less than %min',
+  maxValueMessage: 'The value cannot be greater than %max',
+  rangeValueMessage: 'The value must be between %min and %max',
+  numberPatternMessage: 'Does not match pattern %pattern',
+});
 
 export default messageEn;

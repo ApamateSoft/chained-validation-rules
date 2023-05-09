@@ -1,20 +1,19 @@
 import { describe, expect, test } from '@jest/globals';
 import { Validator, ValidatorBuilder } from '../../src';
-import * as util from 'util';
 
 describe('minValue test', () => {
-  const MIN = 2.5;
+  const CONDITION = 2.5;
   const NOT_PERMIT = [null, undefined, '', 'text', '2,5', '2.49', '0', '-2.5'];
   const PERMIT = ['2.5', '2.51', '30'];
-  const MESSAGE = util.format(Validator.messages.minValueMessage, MIN);
+  const MESSAGE = Validator.messages.minValueMessage.replace('%min', String(CONDITION));
 
   let validator: Validator, builder: Validator;
 
   beforeEach(() => {
     validator = new Validator();
-    validator.minValue(MIN);
+    validator.minValue(CONDITION);
 
-    builder = new ValidatorBuilder().minValue(MIN).build();
+    builder = new ValidatorBuilder().minValue(CONDITION).build();
   });
 
   test('notPermit', () => {

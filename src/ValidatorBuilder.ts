@@ -30,8 +30,8 @@ import {
   minValue,
   maxValue,
   rangeValue,
+  numberPattern,
 } from './utils/validators';
-import * as util from 'util';
 
 export default class ValidatorBuilder {
   constructor(
@@ -91,7 +91,7 @@ export default class ValidatorBuilder {
    * @return ValidatorBuilder
    */
   textLength(length: number, message: string = Validator.messages.textLengthMessage): ValidatorBuilder {
-    return this.rule(util.format(message, length), (eva) => textLength(length, eva));
+    return this.rule(message.replace('%length', String(length)), (eva) => textLength(length, eva));
   }
 
   /**
@@ -101,7 +101,7 @@ export default class ValidatorBuilder {
    * @return ValidatorBuilder
    */
   minLength(min: number, message: string = Validator.messages.minLengthMessage): ValidatorBuilder {
-    return this.rule(util.format(message, min), (eva) => minLength(min, eva));
+    return this.rule(message.replace('%min', String(min)), (eva) => minLength(min, eva));
   }
 
   /**
@@ -111,7 +111,7 @@ export default class ValidatorBuilder {
    * @return ValidatorBuilder
    */
   maxLength(max: number, message: string = Validator.messages.maxLengthMessage): ValidatorBuilder {
-    return this.rule(util.format(message, max), (eva) => maxLength(max, eva));
+    return this.rule(message.replace('%max', String(max)), (eva) => maxLength(max, eva));
   }
 
   /**
@@ -122,7 +122,9 @@ export default class ValidatorBuilder {
    * @return ValidatorBuilder
    */
   rangeLength(min: number, max: number, message: string = Validator.messages.rangeLengthMessage): ValidatorBuilder {
-    return this.rule(util.format(message, min, max), (eva) => rangeLength(min, max, eva));
+    return this.rule(message.replace('%min', String(min)).replace('%max', String(max)), (eva) =>
+      rangeLength(min, max, eva),
+    );
   }
 
   /**
@@ -132,7 +134,7 @@ export default class ValidatorBuilder {
    * @return ValidatorBuilder
    */
   re(regExp: string, message: string = Validator.messages.reMessage): ValidatorBuilder {
-    return this.rule(util.format(message, regExp), (eva) => re(regExp, eva));
+    return this.rule(message.replace('%regExp', regExp), (eva) => re(regExp, eva));
   }
 
   /**
@@ -297,7 +299,7 @@ export default class ValidatorBuilder {
    * @return ValidatorBuilder
    */
   notContain(alphabet: string, message: string = Validator.messages.notContainMessage): ValidatorBuilder {
-    return this.rule(util.format(message, alphabet), (eva) => notContain(alphabet, eva));
+    return this.rule(message.replace('%alphabet', alphabet), (eva) => notContain(alphabet, eva));
   }
 
   /**
@@ -307,7 +309,7 @@ export default class ValidatorBuilder {
    * @return ValidatorBuilder
    */
   shouldOnlyContain(alphabet: string, message: string = Validator.messages.shouldOnlyContainMessage): ValidatorBuilder {
-    return this.rule(util.format(message, alphabet), (eva) => shouldOnlyContain(alphabet, eva));
+    return this.rule(message.replace('%alphabet', alphabet), (eva) => shouldOnlyContain(alphabet, eva));
   }
 
   /**
@@ -317,7 +319,7 @@ export default class ValidatorBuilder {
    * @return ValidatorBuilder
    */
   mustContainOne(alphabet: string, message: string = Validator.messages.mustContainOneMessage): ValidatorBuilder {
-    return this.rule(util.format(message, alphabet), (eva) => mustContainOne(alphabet, eva));
+    return this.rule(message.replace('%alphabet', alphabet), (eva) => mustContainOne(alphabet, eva));
   }
 
   /**
@@ -332,7 +334,9 @@ export default class ValidatorBuilder {
     alphabet: string,
     message: string = Validator.messages.mustContainMinMessage,
   ): ValidatorBuilder {
-    return this.rule(util.format(message, min, alphabet), (eva) => mustContainMin(min, alphabet, eva));
+    return this.rule(message.replace('%min', String(min)).replace('%alphabet', alphabet), (eva) =>
+      mustContainMin(min, alphabet, eva),
+    );
   }
 
   /**
@@ -343,7 +347,7 @@ export default class ValidatorBuilder {
    * @return ValidatorBuilder
    */
   minValue(min: number, message: string = Validator.messages.minValueMessage): ValidatorBuilder {
-    return this.rule(util.format(message, min), (eva) => minValue(min, eva));
+    return this.rule(message.replace('%min', String(min)), (eva) => minValue(min, eva));
   }
 
   /**
@@ -354,7 +358,7 @@ export default class ValidatorBuilder {
    * @return ValidatorBuilder
    */
   maxValue(max: number, message: string = Validator.messages.maxValueMessage): ValidatorBuilder {
-    return this.rule(util.format(message, max), (eva) => maxValue(max, eva));
+    return this.rule(message.replace('%max', String(max)), (eva) => maxValue(max, eva));
   }
 
   /**
@@ -366,7 +370,25 @@ export default class ValidatorBuilder {
    * @return ValidatorBuilder
    */
   rangeValue(min: number, max: number, message: string = Validator.messages.rangeValueMessage): ValidatorBuilder {
-    return this.rule(util.format(message, min, max), (eva) => rangeValue(min, max, eva));
+    return this.rule(message.replace('%min', String(min)).replace('%max', String(max)), (eva) =>
+      rangeValue(min, max, eva),
+    );
+  }
+
+  /**
+   * Validates that the string matches the pattern, replacing the x's with numbers <br/>
+   * <b>Example:</b> For the pattern +xx (xxx) xxx-xx-xx, the following Strings are valid:
+   * <ul>
+   *     <li>+12 (345) 678-90-12</li>
+   *     <li>+xx (345) 678-90-12</li>
+   *     <li>+xx (xxx) xxx-xx-xx</li>
+   * <ul/>
+   * @param pattern string with the pattern
+   * @param message Error message
+   * @return ValidatorBuilder
+   */
+  numberPattern(pattern: string, message: string = Validator.messages.numberPatternMessage): ValidatorBuilder {
+    return this.rule(message.replace('%pattern', pattern), (eva) => numberPattern(pattern, eva));
   }
 
   /**

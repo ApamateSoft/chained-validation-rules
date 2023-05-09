@@ -1,13 +1,12 @@
 import { describe, expect, test } from '@jest/globals';
 import { Validator, ValidatorBuilder } from '../../src';
-import * as util from 'util';
 
 describe('rangeValue test', () => {
   const MIN = 10;
   const MAX = 30;
   const NOT_PERMIT = [null, undefined, '', 'text', '9', '31'];
   const PERMIT = ['10', '30', '20'];
-  const MESSAGE = util.format(Validator.messages.rangeValueMessage, MIN, MAX);
+  const MESSAGE = Validator.messages.rangeValueMessage.replace('%min', String(MIN)).replace('%max', String(MAX));
 
   let validator: Validator, builder: Validator;
 
