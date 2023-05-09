@@ -1,6 +1,5 @@
 import { describe, expect, test } from '@jest/globals';
 import { Validator, ValidatorBuilder } from '../../src';
-import * as util from 'util';
 
 describe('numberPattern test', () => {
   const CONDITION = '+xx (xxx) xxx-xx-xx';
@@ -15,7 +14,7 @@ describe('numberPattern test', () => {
     '+a8 (412) 756-41-79',
   ];
   const PERMIT = ['+58 (412) 756-41-79', '+xx (xxx) xxx-xx-xx'];
-  const MESSAGE = util.format(Validator.messages.numberPatternMessage, CONDITION);
+  const MESSAGE = Validator.messages.numberPatternMessage.replace('%pattern', CONDITION);
 
   let validator: Validator, builder: Validator;
 

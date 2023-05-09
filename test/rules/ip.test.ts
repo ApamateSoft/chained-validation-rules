@@ -1,6 +1,5 @@
 import { describe, expect, test } from '@jest/globals';
 import { Validator, ValidatorBuilder } from '../../src';
-import * as util from 'util';
 
 describe('ip test', () => {
   const NOT_PERMIT = [
@@ -24,7 +23,7 @@ describe('ip test', () => {
     'ffff::ffff',
     'ffff:ffff::ffff',
   ];
-  const MESSAGE = util.format(Validator.messages.ipMessage);
+  const MESSAGE = Validator.messages.ipMessage;
 
   let validator: Validator, builder: Validator;
 

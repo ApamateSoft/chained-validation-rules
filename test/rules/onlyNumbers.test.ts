@@ -1,11 +1,10 @@
 import { describe, expect, test } from '@jest/globals';
 import { Validator, ValidatorBuilder } from '../../src';
-import * as util from 'util';
 
 describe('onlyNumbers test', () => {
   const NOT_PERMIT = [null, undefined, '', 'text', '1a', 'a1', '1a1', 'a1a', '1.00', '1,00'];
   const PERMIT = ['123456789'];
-  const MESSAGE = util.format(Validator.messages.onlyNumbersMessage);
+  const MESSAGE = Validator.messages.onlyNumbersMessage;
 
   let validator: Validator, builder: Validator;
 

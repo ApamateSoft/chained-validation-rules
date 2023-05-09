@@ -1,12 +1,11 @@
 import { describe, expect, test } from '@jest/globals';
-import * as util from 'util';
 import { Validator, ValidatorBuilder } from '../../src';
 
 describe('maxLength test', () => {
   const CONDITION = 3;
   const NOT_PERMIT = [null, undefined, '', '1234'];
   const PERMIT = ['1', '12', '123'];
-  const MESSAGE = util.format(Validator.messages.maxLengthMessage, CONDITION);
+  const MESSAGE = Validator.messages.maxLengthMessage.replace('%max', String(CONDITION));
 
   let validator: Validator, builder: Validator;
 

@@ -1,6 +1,5 @@
 import { describe, expect, test } from '@jest/globals';
 import { Validator, ValidatorBuilder } from '../../src';
-import * as util from 'util';
 
 describe('time12 test', () => {
   const NOT_PERMIT = [
@@ -18,7 +17,7 @@ describe('time12 test', () => {
     '23:59',
   ];
   const PERMIT = ['12:59 am', '1:00 pm', '01:00AM', '01:00pm'];
-  const MESSAGE = util.format(Validator.messages.time12Message);
+  const MESSAGE = Validator.messages.time12Message;
 
   let validator: Validator, builder: Validator;
 

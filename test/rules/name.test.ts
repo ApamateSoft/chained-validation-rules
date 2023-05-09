@@ -1,11 +1,10 @@
 import { describe, expect, test } from '@jest/globals';
 import { Validator, ValidatorBuilder } from '../../src';
-import * as util from 'util';
 
 describe('name test', () => {
   const NOT_PERMIT = [null, undefined, '', '10', '1jose', '@omar', 'Jesús', 'jesus 1alberto', ' jesus', 'jesus '];
   const PERMIT = ['jesus', 'maria', 'JOSE', 'jesus maria', 'Maria Jose', 'Jose Jesus', 'maria de jose'];
-  const MESSAGE = util.format(Validator.messages.nameMessage);
+  const MESSAGE = Validator.messages.nameMessage;
 
   let validator: Validator, builder: Validator;
 

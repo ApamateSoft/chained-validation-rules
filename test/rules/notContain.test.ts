@@ -1,12 +1,11 @@
 import { describe, expect, test } from '@jest/globals';
 import { Validator, ValidatorBuilder } from '../../src';
-import * as util from 'util';
 
 describe('notContain test', () => {
   const CONDITION = '01234567';
   const NOT_PERMIT = [null, undefined, '', '0', '1', '2', '3', '4', '5', '6', '7', 'text4'];
   const PERMIT = ['89', 'text', '@nic89'];
-  const MESSAGE = util.format(Validator.messages.notContainMessage, CONDITION);
+  const MESSAGE = Validator.messages.notContainMessage.replace('%alphabet', CONDITION);
 
   let validator: Validator, builder: Validator;
 

@@ -1,11 +1,10 @@
 import { describe, expect, test } from '@jest/globals';
 import { Validator, ValidatorBuilder } from '../../src';
-import * as util from 'util';
 
 describe('wwwLink test', () => {
   const NOT_PERMIT = [null, undefined, '', 'google.com', 'http://google.com', 'https://google.com'];
   const PERMIT = ['www.google.com', 'www.google.com/api/auth?name=Name&lastName=LastName'];
-  const MESSAGE = util.format(Validator.messages.wwwLinkMessage);
+  const MESSAGE = Validator.messages.wwwLinkMessage;
 
   let validator: Validator, builder: Validator;
 

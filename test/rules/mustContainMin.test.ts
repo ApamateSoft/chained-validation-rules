@@ -1,20 +1,19 @@
 import { describe, expect, test } from '@jest/globals';
 import { Validator, ValidatorBuilder } from '../../src';
-import * as util from 'util';
 
 describe('mustContainMin test', () => {
   const MIN = 3;
-  const CONDITION = 'abcdefghijklmnopqrstuvwxyz';
+  const ALPHABET = 'abcdefghijklmnopqrstuvwxyz';
   const NOT_PERMIT = [null, undefined, '', 'ABC', '123', 'abC'];
   const PERMIT = ['abc', 'abcd', 'aBcDe', 'abcABC123...'];
-  const MESSAGE = util.format(Validator.messages.mustContainMinMessage, MIN, CONDITION);
+  const MESSAGE = Validator.messages.mustContainMinMessage.replace('%min', String(MIN)).replace('%alphabet', ALPHABET);
 
   let validator: Validator, builder: Validator;
 
   beforeEach(() => {
     validator = new Validator();
-    validator.mustContainMin(MIN, CONDITION);
-    builder = new ValidatorBuilder().mustContainMin(MIN, CONDITION).build();
+    validator.mustContainMin(MIN, ALPHABET);
+    builder = new ValidatorBuilder().mustContainMin(MIN, ALPHABET).build();
   });
 
   test('notPermit', () => {

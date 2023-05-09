@@ -1,11 +1,10 @@
 import { describe, expect, test } from '@jest/globals';
 import { Validator, ValidatorBuilder } from '../../src';
-import * as util from 'util';
 
 describe('onlyAlphanumeric test', () => {
   const NOT_PERMIT = [null, undefined, '', '-', 'a*', '>text', 'a-', '-1.61', '$10,320.00', 'a b'];
   const PERMIT = ['0123456789aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ'];
-  const MESSAGE = util.format(Validator.messages.onlyAlphanumericMessage);
+  const MESSAGE = Validator.messages.onlyAlphanumericMessage;
 
   let validator: Validator, builder: Validator;
 

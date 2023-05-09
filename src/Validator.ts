@@ -34,7 +34,6 @@ import {
   rangeValue,
   numberPattern,
 } from './utils/validators';
-import * as util from 'util';
 
 /**
  * <h1>Chained validation rules</h1>
@@ -42,7 +41,7 @@ import * as util from 'util';
  * Facilitates the validation of strings by chaining a series of rules
  *
  * @author ApamateSoft
- * @version 0.0.11
+ * @version 0.0.12
  */
 export default class Validator {
   public static messages: Messages = messagesEn;
@@ -167,7 +166,7 @@ export default class Validator {
    * @param message Error message
    */
   textLength(length: number, message: string = Validator.messages.textLengthMessage) {
-    this.rule(util.format(message, length), (eva) => textLength(length, eva));
+    this.rule(message.replace('%length', String(length)), (eva) => textLength(length, eva));
   }
 
   /**
@@ -176,7 +175,7 @@ export default class Validator {
    * @param message Error message
    */
   minLength(min: number, message: string = Validator.messages.minLengthMessage) {
-    this.rule(util.format(message, min), (eva) => minLength(min, eva));
+    this.rule(message.replace('%min', String(min)), (eva) => minLength(min, eva));
   }
 
   /**
@@ -185,7 +184,7 @@ export default class Validator {
    * @param message Error message
    */
   maxLength(max: number, message: string = Validator.messages.maxLengthMessage) {
-    this.rule(util.format(message, max), (eva) => maxLength(max, eva));
+    this.rule(message.replace('%max', String(max)), (eva) => maxLength(max, eva));
   }
 
   /**
@@ -195,7 +194,7 @@ export default class Validator {
    * @param message Error message
    */
   rangeLength(min: number, max: number, message: string = Validator.messages.rangeLengthMessage) {
-    this.rule(util.format(message, min, max), (eva) => rangeLength(min, max, eva));
+    this.rule(message.replace('%min', String(min)).replace('%max', String(max)), (eva) => rangeLength(min, max, eva));
   }
 
   /**
@@ -204,7 +203,7 @@ export default class Validator {
    * @param message Error message
    */
   re(regExp: string, message: string = Validator.messages.reMessage) {
-    this.rule(util.format(message, regExp), (eva) => re(regExp, eva));
+    this.rule(message.replace('%regExp', regExp), (eva) => re(regExp, eva));
   }
 
   /**
@@ -352,7 +351,7 @@ export default class Validator {
    * @param message Error message
    */
   notContain(alphabet: string, message: string = Validator.messages.notContainMessage) {
-    this.rule(util.format(message, alphabet), (eva) => notContain(alphabet, eva));
+    this.rule(message.replace('%alphabet', alphabet), (eva) => notContain(alphabet, eva));
   }
 
   /**
@@ -361,7 +360,7 @@ export default class Validator {
    * @param message  Error message.
    */
   shouldOnlyContain(alphabet: string, message: string = Validator.messages.shouldOnlyContainMessage) {
-    this.rule(util.format(message, alphabet), (eva) => shouldOnlyContain(alphabet, eva));
+    this.rule(message.replace('%alphabet', alphabet), (eva) => shouldOnlyContain(alphabet, eva));
   }
 
   /**
@@ -370,7 +369,7 @@ export default class Validator {
    * @param message Error message
    */
   mustContainOne(alphabet: string, message: string = Validator.messages.mustContainOneMessage) {
-    this.rule(util.format(message, alphabet), (eva) => mustContainOne(alphabet, eva));
+    this.rule(message.replace('%alphabet', alphabet), (eva) => mustContainOne(alphabet, eva));
   }
 
   /**
@@ -380,7 +379,9 @@ export default class Validator {
    * @param message Error message
    */
   mustContainMin(min: number, alphabet: string, message: string = Validator.messages.mustContainMinMessage) {
-    this.rule(util.format(message, min, alphabet), (eva) => mustContainMin(min, alphabet, eva));
+    this.rule(message.replace('%min', String(min)).replace('%alphabet', alphabet), (eva) =>
+      mustContainMin(min, alphabet, eva),
+    );
   }
 
   /**
@@ -390,7 +391,7 @@ export default class Validator {
    * @param message Error message
    */
   minValue(min: number, message: string = Validator.messages.minValueMessage) {
-    this.rule(util.format(message, min), (eva) => minValue(min, eva));
+    this.rule(message.replace('%min', String(min)), (eva) => minValue(min, eva));
   }
 
   /**
@@ -400,7 +401,7 @@ export default class Validator {
    * @param message Error message
    */
   maxValue(max: number, message: string = Validator.messages.maxValueMessage) {
-    this.rule(util.format(message, max), (eva) => maxValue(max, eva));
+    this.rule(message.replace('%max', String(max)), (eva) => maxValue(max, eva));
   }
 
   /**
@@ -411,7 +412,7 @@ export default class Validator {
    * @param message Error message
    */
   rangeValue(min: number, max: number, message: string = Validator.messages.rangeValueMessage) {
-    this.rule(util.format(message, min, max), (eva) => rangeValue(min, max, eva));
+    this.rule(message.replace('%min', String(min)).replace('%max', String(max)), (eva) => rangeValue(min, max, eva));
   }
 
   /**
@@ -426,6 +427,6 @@ export default class Validator {
    * @param message Error message
    */
   numberPattern(pattern: string, message: string = Validator.messages.numberPatternMessage) {
-    this.rule(util.format(message, pattern), (eva) => numberPattern(pattern, eva));
+    this.rule(message.replace('%pattern', pattern), (eva) => numberPattern(pattern, eva));
   }
 }
