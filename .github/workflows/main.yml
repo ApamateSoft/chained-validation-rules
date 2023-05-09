@@ -15,8 +15,7 @@ jobs:
     - name: npm install, build and test
       run: |
         npm install
-        npm format
-        npm lint
-        npm eslint
-        npm run build
-        npm test
+        npm run format
+        npm run lint
+        npm run eslint
+        npm run test
